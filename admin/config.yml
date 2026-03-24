@@ -1,5 +1,6 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: yourusername/your-repo-name  # replace this
   branch: main
 
 media_folder: "assets"
@@ -8,15 +9,11 @@ public_folder: "/assets"
 collections:
   - name: "projects"
     label: "Projects"
-    files:
-      - file: "projects/projects.json"
-        label: "Projects List"
-        name: "projects"
-        fields:
-          - label: "Projects"
-            name: "projects"
-            widget: "list"
-            fields:
-              - {label: "Title", name: "title", widget: "string"}
-              - {label: "Description", name: "description", widget: "text"}
-              - {label: "Embed URL", name: "embed", widget: "string"}
+    folder: "projects"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Description", name: "description", widget: "text"}
+      - {label: "Media URL", name: "media_url", widget: "string"}
+      - {label: "Thumbnail", name: "thumbnail", widget: "image"}
