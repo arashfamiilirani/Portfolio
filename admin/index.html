@@ -4,10 +4,18 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Dashboard</title>
+  <link rel="cms-config-url" type="text/yaml" href="https://www.arashfamiilirani.com/admin/config.yml">
 </head>
 <body>
   <div id="nc-root"></div>
-<link rel="cms-config-url" type="text/yaml" href="https://www.arashfamiilirani.com/admin/config.yml">
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  <script>
+    // This force-reloads if the login stays stuck
+    window.addEventListener("message", (event) => {
+      if (event.data === "authorizing:github:success") {
+        setTimeout(() => { window.location.reload(); }, 500);
+      }
+    }, false);
+  </script>
 </body>
 </html>
