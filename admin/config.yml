@@ -20,3 +20,4 @@ collections:
       - { label: "Category", name: "category", widget: "select", options: ["Sound Design", "Composition", "Audio Engineering"] }
       - { label: "Media Link", name: "link", widget: "string" }
       - { label: "Description", name: "body", widget: "markdown" }
+      
