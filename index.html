@@ -1,41 +1,37 @@
-<script>
-const container = document.getElementById('projects');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Sound Artist</title>
+    <style>
+        :root { --bg: #0a0a0a; --text: #f0f0f0; --accent: #0070f3; }
+        body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; padding: 2rem; }
+        header { border-bottom: 1px solid #333; padding-bottom: 2rem; margin-bottom: 3rem; }
+        h1 { font-weight: 300; letter-spacing: -1px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 2rem; }
+        .project-card { background: #1a1a1a; padding: 1rem; border-radius: 8px; transition: 0.3s; }
+        .project-card:hover { border: 1px solid var(--accent); }
+        .media-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin-top: 1rem; }
+        .media-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+        .tag { font-size: 0.7rem; text-transform: uppercase; color: var(--accent); letter-spacing: 1px; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Arash Irani</h1>
+        <p>Sound Artist / Composer / Sound Designer</p>
+    </header>
 
-fetch('projects/projects.json')
-.then(res => {
-  if (!res.ok) throw new Error("JSON not found");
-  return res.json();
-})
-.then(data => {
-  data.forEach(p => {
-    try {
-      let embed = "";
-
-      if (p.media_url && p.media_url.includes("youtube")) {
-        embed = `<iframe src="${p.media_url.replace('watch?v=', 'embed/')}" allowfullscreen></iframe>`;
-      } 
-      else if (p.media_url && p.media_url.includes("soundcloud")) {
-        embed = `<iframe src="https://w.soundcloud.com/player/?url=${p.media_url}"></iframe>`;
-      }
-
-      const div = document.createElement('div');
-      div.className = 'card';
-
-      div.innerHTML = `
-        <h3>${p.title || "No title"}</h3>
-        <p>${p.description || ""}</p>
-        ${embed}
-      `;
-
-      container.appendChild(div);
-
-    } catch (err) {
-      console.error("Project error:", err);
-    }
-  });
-})
-.catch(err => {
-  document.body.innerHTML = "<h1 style='color:white'>Projects failed to load</h1>";
-  console.error(err);
-});
-</script>
+    <div class="grid">
+        <div class="project-card">
+            <span class="tag">Sound Design</span>
+            <h3>Atmospheric Space Ambience</h3>
+            <div class="media-container">
+                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+            </div>
+            <p>96kHz 24-bit high-fidelity soundscape design.</p>
+        </div>
+    </div>
+</body>
+</html>
