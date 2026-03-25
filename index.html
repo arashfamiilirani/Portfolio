@@ -1,34 +1,41 @@
 <script>
+const container = document.getElementById('projects');
+
 fetch('projects/projects.json')
-.then(res => res.json())
+.then(res => {
+  if (!res.ok) throw new Error("JSON not found");
+  return res.json();
+})
 .then(data => {
-  const container = document.getElementById('projects');
-
   data.forEach(p => {
+    try {
+      let embed = "";
 
-    let embed = "";
+      if (p.media_url && p.media_url.includes("youtube")) {
+        embed = `<iframe src="${p.media_url.replace('watch?v=', 'embed/')}" allowfullscreen></iframe>`;
+      } 
+      else if (p.media_url && p.media_url.includes("soundcloud")) {
+        embed = `<iframe src="https://w.soundcloud.com/player/?url=${p.media_url}"></iframe>`;
+      }
 
-    if (p.media_url.includes("youtube")) {
-      embed = `<iframe src="${p.media_url.replace('watch?v=', 'embed/')}" allowfullscreen></iframe>`;
-    } 
-    else if (p.media_url.includes("soundcloud")) {
-      embed = `<iframe src="https://w.soundcloud.com/player/?url=${p.media_url}"></iframe>`;
+      const div = document.createElement('div');
+      div.className = 'card';
+
+      div.innerHTML = `
+        <h3>${p.title || "No title"}</h3>
+        <p>${p.description || ""}</p>
+        ${embed}
+      `;
+
+      container.appendChild(div);
+
+    } catch (err) {
+      console.error("Project error:", err);
     }
-
-    const div = document.createElement('div');
-    div.className = 'card';
-
-    div.innerHTML = `
-      <h3>${p.title}</h3>
-      <p>${p.description}</p>
-      ${embed}
-    `;
-
-    container.appendChild(div);
   });
 })
 .catch(err => {
-  document.body.innerHTML = "<h1 style='color:white'>Error loading projects</h1>";
+  document.body.innerHTML = "<h1 style='color:white'>Projects failed to load</h1>";
   console.error(err);
 });
 </script>
