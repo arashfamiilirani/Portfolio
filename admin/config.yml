@@ -3,12 +3,11 @@ backend:
   branch: main # Double check if your GitHub says 'main' or 'master'
   site_domain: arashfamiilirani.com
 
-# This tells the CMS how to handle your audio/video uploads
+# THIS LINE STOPS THE ERROR:
+search: false
+
 media_folder: "uploads"
 public_folder: "/uploads"
-
-# This line often fixes the "Search engine" crash
-search: false 
 
 collections:
   - name: "projects"
@@ -16,10 +15,8 @@ collections:
     folder: "projects"
     create: true
     slug: "{{slug}}"
-    editor:
-      preview: false # This speeds up the loading of audio/video links
     fields:
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Description", name: "description", widget: "text"}
-      - {label: "Media Link (YouTube/SoundCloud)", name: "embed", widget: "string", required: false}
-      - {label: "Upload Audio/Video File", name: "file", widget: "file", required: false}
+      - {label: "Media Link", name: "embed", widget: "string", required: false}
+      - {label: "Upload File", name: "file", widget: "file", required: false}
