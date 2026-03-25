@@ -11,9 +11,10 @@ export default async function handler(req, res) {
   });
   const data = await response.json();
   
-  // This section below is what we are fixing:
   res.send(`
     <script>
+      // The "*" below allows the "Success" message to jump from the popup 
+      // back to your main window even if the "www" is missing.
       window.opener.postMessage("authorization:github:success:${JSON.stringify(data)}", "*");
       window.close();
     </script>
