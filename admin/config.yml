@@ -1,20 +1,21 @@
 backend:
   name: github
-  repo: arashfamiilirani/Portfolio
+  repo: your-github-username/your-repo-name
   branch: main
+  base_url: https://arashfamiilirani.vercel.app # Your actual URL
+  auth_endpoint: api/auth
 
-media_folder: "assets"
-public_folder: "/assets"
+media_folder: "assets/img"
+public_folder: "/assets/img"
 
 collections:
-  - name: "projects"
-    label: "Projects"
-    folder: "projects"
+  - name: "portfolio"
+    label: "My Sound Works"
+    folder: "content/portfolio"
     create: true
-    slug: "{{slug}}"
-    extension: "json"
-    format: "json"
+    slug: "{{title}}"
     fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Description", name: "description", widget: "text" }
-      - { label: "Media URL", name: "media_url", widget: "string" }
+      - { label: "Project Title", name: "title", widget: "string" }
+      - { label: "Category", name: "category", widget: "select", options: ["Sound Design", "Composition", "Audio Engineering"] }
+      - { label: "Media Link (SoundCloud or YouTube)", name: "link", widget: "string" }
+      - { label: "Short Description", name: "body", widget: "markdown" }
