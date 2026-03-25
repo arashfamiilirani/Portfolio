@@ -9,7 +9,7 @@
   <body>
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
     <script>
-      // This forces the admin panel to find your Netlify Identity instance
+      // FORCE CONNECTION: This tells the panel exactly where your site is
       if (window.netlifyIdentity) {
         window.netlifyIdentity.on("init", user => {
           if (!user) {
