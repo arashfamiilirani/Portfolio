@@ -10,13 +10,18 @@ export default async function handler(req, res) {
     }),
   });
   const data = await response.json();
-  
+  const content = JSON.stringify(data);
+
   res.send(`
+    <html>
+    <body>
     <script>
-      // Using "*" ensures the message reaches your main window 
-      // regardless of the "www" or "non-www" address.
-      window.opener.postMessage("authorization:github:success:${JSON.stringify(data)}", "*");
-      window.close();
+      (function() {
+        window.opener.postMessage("authorization:github:success:" + '${content}', "*");
+        window.close();
+      })();
     </script>
+    </body>
+    </html>
   `);
 }
