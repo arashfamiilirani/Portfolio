@@ -1,11 +1,14 @@
 backend:
   name: git-gateway
-  branch: main # Double check if your GitHub branch is named 'main' or 'master'
-  site_domain: arashfamiilirani.com # THIS IS THE FIX
-  site_id: cee01178-4e4f-46cb-9970-ae775d85b807
-  
+  branch: main # Double check if your GitHub says 'main' or 'master'
+  site_domain: arashfamiilirani.com
+
+# This tells the CMS how to handle your audio/video uploads
 media_folder: "uploads"
 public_folder: "/uploads"
+
+# This line often fixes the "Search engine" crash
+search: false 
 
 collections:
   - name: "projects"
@@ -13,6 +16,8 @@ collections:
     folder: "projects"
     create: true
     slug: "{{slug}}"
+    editor:
+      preview: false # This speeds up the loading of audio/video links
     fields:
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Description", name: "description", widget: "text"}
