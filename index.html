@@ -1,69 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Arash Irani - Sound Artist</title>
-  
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arash Irani</title>
 
-  <style>
-    body { margin:0; font-family: Arial, sans-serif; background:#0d0d0d; color:#f5f5f5;}
-    header {padding:40px; text-align:center; border-bottom:1px solid #222;}
-    section {padding:60px 20px; max-width:900px; margin:auto;}
-    .project {margin-bottom:40px; border-bottom:1px solid #222; padding-bottom:20px;}
-    iframe {width:100%; height:200px; border:none; background: #1a1a1a; border-radius: 8px;}
-    h1 { letter-spacing: 2px; text-transform: uppercase; }
-    h3 { color: #007aff; } /* Professional blue accent */
-  </style>
+<style>
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #0a0a0a;
+  color: #fff;
+}
+
+section {
+  padding: 80px 20px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+#hero {
+  text-align: center;
+  padding: 120px 20px;
+}
+
+#hero h1 {
+  font-size: 4rem;
+  margin: 0;
+}
+
+#hero p {
+  color: #aaa;
+  font-size: 1.5rem;
+}
+
+.projects {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.card {
+  background: #111;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.card iframe {
+  width: 100%;
+  height: 200px;
+  border: none;
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+</style>
 </head>
+
 <body>
 
-<header>
+<section id="hero">
   <h1>Arash Irani</h1>
   <p>Sound Artist / Composer / Sound Designer</p>
-</header>
+</section>
 
 <section>
   <h2>Projects</h2>
-  <div id="projects"></div>
+  <div class="projects" id="projects"></div>
+</section>
+
+<section>
+  <h2>About</h2>
+  <p>Electroacoustic composer and sound designer focused on immersive sonic experiences.</p>
+</section>
+
+<section>
+  <h2>Contact</h2>
+  <p>Email: your@email.com</p>
 </section>
 
 <script>
-// This function loads your projects from the admin panel
-async function loadProjects() {
-  try {
-    const res = await fetch('./projects/projects.json');
-    const data = await res.json();
-    const container = document.getElementById('projects');
+fetch('projects/projects.json')
+.then(res => res.json())
+.then(data => {
+  const container = document.getElementById('projects');
 
-    data.forEach(p => {
-      const div = document.createElement('div');
-      div.className = 'project';
-      // This handles your YouTube/SoundCloud links and direct file uploads
-      div.innerHTML = `
-        <h3>${p.title}</h3>
-        <p>${p.description}</p>
-        <iframe src="${p.embed || p.file}"></iframe>
-      `;
-      container.appendChild(div);
-    });
-  } catch (err) {
-    console.log("No projects found yet. Go to /admin to add your first one!");
-  }
-}
-loadProjects();
+  data.forEach(p => {
+    const div = document.createElement('div');
+    div.className = 'card';
 
-// 2. ADDED: This script forces the page to refresh or redirect when you log in
-if (window.netlifyIdentity) {
-  window.netlifyIdentity.on("init", user => {
-    if (!user) {
-      window.netlifyIdentity.on("login", () => {
-        document.location.href = "/admin/";
-      });
-    }
+    div.innerHTML = `
+      <h3>${p.title}</h3>
+      <p>${p.description}</p>
+      <iframe src="${p.media_url.replace('watch?v=', 'embed/')}" allowfullscreen></iframe>
+    `;
+
+    container.appendChild(div);
   });
-}
+});
 </script>
 
 </body>
