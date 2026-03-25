@@ -3,34 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio | Sound Artist</title>
+    <title>Arash Irani | Sound Artist & Designer</title>
     <style>
-        :root { --bg: #0a0a0a; --text: #f0f0f0; --accent: #0070f3; }
-        body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; padding: 2rem; }
-        header { border-bottom: 1px solid #333; padding-bottom: 2rem; margin-bottom: 3rem; }
-        h1 { font-weight: 300; letter-spacing: -1px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 2rem; }
-        .project-card { background: #1a1a1a; padding: 1rem; border-radius: 8px; transition: 0.3s; }
-        .project-card:hover { border: 1px solid var(--accent); }
-        .media-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin-top: 1rem; }
-        .media-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
-        .tag { font-size: 0.7rem; text-transform: uppercase; color: var(--accent); letter-spacing: 1px; }
+        :root { --bg: #080808; --card: #121212; --accent: #ffffff; --text: #a0a0a0; }
+        body { background: var(--bg); color: #fff; font-family: 'Inter', -apple-system, sans-serif; margin: 0; padding: 5vw; }
+        header { border-bottom: 1px solid #222; margin-bottom: 60px; padding-bottom: 20px; display: flex; justify-content: space-between; align-items: baseline; }
+        h1 { font-weight: 300; font-size: 1.5rem; letter-spacing: 1px; margin: 0; }
+        .subtitle { color: var(--text); font-size: 0.9rem; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 40px; }
+        .card { background: var(--card); border: 1px solid #1a1a1a; padding: 24px; border-radius: 4px; transition: 0.3s; }
+        .card:hover { border-color: #444; }
+        .card h3 { margin-top: 0; font-weight: 400; font-size: 1.1rem; }
+        .tag { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: var(--text); margin-bottom: 10px; display: block; }
+        iframe { width: 100%; border: none; border-radius: 2px; margin-top: 15px; }
+        /* Professional Soundcloud Dark Mode Hack */
+        iframe[src*="soundcloud.com"] { filter: invert(100%) hue-rotate(180deg) contrast(0.9); opacity: 0.8; }
     </style>
 </head>
 <body>
     <header>
-        <h1>Arash Irani</h1>
-        <p>Sound Artist / Composer / Sound Designer</p>
+        <div>
+            <h1>ARASH IRANI</h1>
+            <span class="subtitle">Sound Artist / Composer / Audio Engineer</span>
+        </div>
+        <span class="subtitle">Montreal, QC</span>
     </header>
 
     <div class="grid">
-        <div class="project-card">
+        <div class="card">
             <span class="tag">Sound Design</span>
             <h3>Atmospheric Space Ambience</h3>
-            <div class="media-container">
-                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
-            </div>
-            <p>96kHz 24-bit high-fidelity soundscape design.</p>
+            <p class="subtitle">High-fidelity 96kHz 24-bit soundscape for interactive media.</p>
+            <iframe height="160" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/YOUR_ID&color=%23000000"></iframe>
         </div>
     </div>
 </body>
