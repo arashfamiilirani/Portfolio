@@ -1,10 +1,7 @@
 backend:
   name: github
-  repo: your-github-username/your-repo-name # Replace with YOUR username and repo name
+  repo: arashfamiilirani/Portfolio # Replace with your actual GitHub username/repo
   branch: main
-  site_domain: arashfamiilirani.com
-  base_url: https://arashfamiilirani.com
-  auth_endpoint: https://gatekeeper-arash.vercel.app # We will set this up next
 
 # THIS LINE STOPS THE ERROR:
 search: false
