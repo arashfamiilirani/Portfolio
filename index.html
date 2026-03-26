@@ -4,48 +4,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     
     <style>
-        :root { --bg: #050505; --accent: #f1f704; --panel: rgba(20, 20, 22, 0.8); }
-        body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; margin: 0; scroll-behavior: smooth; }
+        :root { --bg: #030303; --text: #f5f5f5; --dim: #888; }
+        body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; padding: 0; scroll-behavior: smooth; font-weight: 300; }
         
-        /* THE STICKY HEADER */
+        /* EDITORIAL HEADER */
         header { 
-            position: sticky; top: 0; z-index: 1000; padding: 20px 5%;
-            background: rgba(0,0,0,0.7); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center;
+            position: sticky; top: 0; z-index: 1000; padding: 25px 40px;
+            background: rgba(3, 3, 3, 0.8); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
-        .container { max-width: 900px; margin: 60px auto; padding: 20px; display: flex; flex-direction: column; gap: 40px; }
+        h1 { font-size: 1.1rem; letter-spacing: 4px; text-transform: uppercase; margin: 0; font-weight: 600; }
         
-        /* SECTION CARDS */
-        .card { 
-            background: var(--panel); border: 1px solid rgba(255,255,255,0.05); 
-            border-radius: 24px; padding: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
+        nav { display: flex; gap: 30px; }
+        nav a { color: var(--dim); text-decoration: none; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
+        nav a:hover { color: var(--text); }
 
-        h1 { font-size: 1.2rem; letter-spacing: 2px; text-transform: uppercase; margin: 0; }
-        h2 { color: var(--accent); margin-top: 0; font-size: 1.5rem; letter-spacing: -0.02em; }
+        /* MODULAR LAYOUT SYSTEM */
+        .container { max-width: 1400px; margin: 100px auto; padding: 0 40px; display: flex; flex-direction: column; gap: 120px; }
         
-        /* RICH TEXT EDITOR STYLES */
-        .rich-text p { line-height: 1.7; color: #aaa; }
-        .rich-text a { color: var(--accent); }
-        .rich-text strong { color: #fff; }
+        .module-wrapper { display: flex; width: 100%; }
+        .module-content { flex-shrink: 0; }
+
+        /* Typography styling for the Markdown text */
+        .rich-text p { line-height: 1.8; font-size: 1.1rem; color: #ccc; margin-bottom: 1.5em; }
+        .rich-text h2 { font-size: 2.5rem; font-weight: 400; margin-bottom: 0.5em; letter-spacing: -0.02em; }
+        .rich-text a { color: #fff; text-decoration: underline; text-underline-offset: 4px; }
         
-        nav { display: flex; gap: 20px; flex-wrap: wrap; }
-        nav a { color: #888; text-decoration: none; font-size: 0.8rem; text-transform: uppercase; transition: 0.3s; }
-        nav a:hover { color: var(--accent); }
+        /* DYNAMIC MEDIA GRIDS */
+        .media-grid { display: grid; gap: 40px; width: 100%; }
+        .grid-1 { grid-template-columns: 1fr; }
+        .grid-2 { grid-template-columns: repeat(2, 1fr); }
+        .grid-3 { grid-template-columns: repeat(3, 1fr); }
         
-        iframe { width: 100%; border-radius: 12px; border: none; margin-top: 20px; background: #000; }
+        .media-item iframe { width: 100%; aspect-ratio: 16 / 9; border: none; background: #111; }
+        .caption { font-size: 0.8rem; color: var(--dim); margin-top: 10px; text-transform: uppercase; letter-spacing: 1px; }
+
+        @media (max-width: 900px) {
+            .module-content { width: 100% !important; }
+            .media-grid { grid-template-columns: 1fr !important; }
+            header { flex-direction: column; gap: 20px; }
+        }
     </style>
 </head>
 <body>
 
 <header>
     <h1 id="site-name">PORTFOLIO</h1>
-    <nav id="auto-menu"></nav>
+    <nav id="site-menu"></nav>
 </header>
 
 <main class="container" id="page-content"></main>
@@ -56,36 +66,62 @@
             const res = await fetch('/content/settings.json');
             const data = await res.json();
 
-            // Set Color & Name
-            if(data.accent) document.documentElement.style.setProperty('--accent', data.accent);
             if(data.site_name) document.getElementById('site-name').textContent = data.site_name;
 
-            const menu = document.getElementById('auto-menu');
+            const menu = document.getElementById('site-menu');
             const content = document.getElementById('page-content');
 
-            // Build the Page and Menu Automatically
-            (data.sections || []).forEach((section, index) => {
-                const sectionId = 'section-' + index;
+            (data.modules || []).forEach((mod, index) => {
+                const modId = 'module-' + index;
 
-                // 1. Add to the Sticky Menu (if it has a title)
-                if(section.title) {
-                    menu.innerHTML += `<a href="#${sectionId}">${section.title}</a>`;
+                // 1. Build Navigation Menu
+                if(mod.title) {
+                    menu.innerHTML += `<a href="#${modId}">${mod.title}</a>`;
                 }
 
-                // 2. Add the Content to the Page
-                let html = `<section class="card" id="${sectionId}">`;
-                if (section.title) html += `<h2>${section.title}</h2>`;
-                
-                // This 'marked.parse' makes your Rich Text editor actually work
-                if (section.body) html += `<div class="rich-text">${marked.parse(section.body)}</div>`; 
-                
-                if (section.media_link) html += `<iframe src="${section.media_link}" height="350"></iframe>`;
-                html += `</section>`;
+                // 2. Interpret Layout Settings
+                let widthRaw = mod.width || "100%";
+                let widthCSS = "100%";
+                if(widthRaw.includes("50%")) widthCSS = "50%";
+                if(widthRaw.includes("75%")) widthCSS = "75%";
 
+                let alignRaw = mod.alignment || "Left";
+                let alignCSS = "flex-start";
+                if(alignRaw === "Center") alignCSS = "center";
+                if(alignRaw === "Right") alignCSS = "flex-end";
+                if(alignRaw === "Center" && widthCSS !== "100%") alignCSS = "center"; // Flexbox centering
+
+                let html = `<section class="module-wrapper" id="${modId}" style="justify-content: ${alignCSS}; text-align: ${alignRaw.toLowerCase()};">`;
+                html += `<div class="module-content" style="width: ${widthCSS};">`;
+
+                // 3. Render Text Module
+                if(mod.type === "text_module" && mod.body) {
+                    html += `<div class="rich-text">${marked.parse(mod.body)}</div>`;
+                }
+
+                // 4. Render Media Gallery Module
+                if(mod.type === "media_module" && mod.media_items) {
+                    let gridClass = "grid-2";
+                    if(mod.columns.includes("1")) gridClass = "grid-1";
+                    if(mod.columns.includes("3")) gridClass = "grid-3";
+
+                    html += `<div class="media-grid ${gridClass}">`;
+                    mod.media_items.forEach(item => {
+                        html += `<div class="media-item">`;
+                        // Auto-adjust height for SoundCloud vs YouTube
+                        let height = item.url.includes("soundcloud") ? "166" : "100%"; 
+                        html += `<iframe src="${item.url}" style="${item.url.includes("soundcloud") ? `height: ${height}px; aspect-ratio: auto;` : ''}"></iframe>`;
+                        if(item.caption) html += `<div class="caption">${item.caption}</div>`;
+                        html += `</div>`;
+                    });
+                    html += `</div>`;
+                }
+
+                html += `</div></section>`;
                 content.innerHTML += html;
             });
 
-        } catch(e) { console.log("Site ready to be configured via dashboard."); }
+        } catch(e) { console.log("Ready for modules to be added in dashboard."); }
     }
     loadSite();
 </script>
