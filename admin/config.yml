@@ -1,25 +1,28 @@
 backend:
   name: github
-  repo: arashfamiilirani/portfolio # Ensure this is your exact repo name
+  repo: arashfamiilirani/portfolio
   branch: main
+  # This tells the CMS to use your site, not Netlify, for the login
+  base_url: https://www.arashfamiilirani.com
+  auth_endpoint: /api/auth
 
 media_folder: "assets/img"
 public_folder: "/assets/img"
 
 collections:
   - name: "content"
-    label: "Editorial Content"
+    label: "Website Content"
     files:
       - name: "home"
-        label: "Homepage (Yulia Mahr Style)"
+        label: "Homepage"
         file: "content/settings.json"
         fields:
-          - { label: "Site Header", name: "site_name", widget: "string" }
-          - { label: "Massive Heading", name: "heading", widget: "string" }
-          - { label: "Bio / Intro Text", name: "bio", widget: "markdown" }
-          - label: "Work Portfolio"
+          - { label: "Site Name", name: "site_name", widget: "string" }
+          - { label: "Main Heading (Large)", name: "heading", widget: "string" }
+          - { label: "Bio / Description", name: "bio", widget: "markdown" }
+          - label: "Project Gallery"
             name: "projects"
             widget: "list"
             fields:
-              - { label: "Title/Caption", name: "title", widget: "string" }
-              - { label: "Media URL (YouTube/Vimeo/SoundCloud)", name: "url", widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "URL (YouTube/Vimeo/SoundCloud)", name: "url", widget: "string" }
