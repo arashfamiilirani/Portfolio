@@ -2,16 +2,16 @@ backend:
   name: github
   repo: arashfamiilirani/portfolio
   branch: main
-  # This is the "bridge" that lets you log in on Vercel
-  base_url: https://www.arashfamiilirani.com
-  auth_endpoint: https://gatekeeper-v2.vercel.app/api/auth
+  # REMOVE your domain from here to fix the 404
+  base_url: https://gatekeeper-v2.vercel.app 
+  auth_endpoint: /api/auth
 
 media_folder: "assets/img"
 public_folder: "/assets/img"
 
 collections:
   - name: "content"
-    label: "Website Content"
+    label: "Editorial Content"
     files:
       - name: "home"
         label: "Homepage"
@@ -19,10 +19,10 @@ collections:
         fields:
           - { label: "Site Name", name: "site_name", widget: "string" }
           - { label: "Main Heading", name: "heading", widget: "string" }
-          - { label: "Bio", name: "bio", widget: "markdown" }
-          - label: "Projects"
+          - { label: "Bio / Intro", name: "bio", widget: "markdown" }
+          - label: "Work Items"
             name: "projects"
             widget: "list"
             fields:
-              - { label: "Title", name: "title", widget: "string" }
-              - { label: "URL", name: "url", widget: "string" }
+              - { label: "Project Title", name: "title", widget: "string" }
+              - { label: "Media URL (YouTube/SoundCloud)", name: "url", widget: "string" }
