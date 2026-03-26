@@ -18,6 +18,6 @@ collections:
     fields:
       - { label: "Project Title", name: "title", widget: "string" }
       - { label: "Category", name: "category", widget: "select", options: ["Sound Design", "Composition", "Audio Engineering"] }
-      - { label: "Media Link", name: "link", widget: "string" }
+      - { label: "Embed URL", name: "link", widget: "string", hint: "Paste the 'src' link from the YouTube/SoundCloud embed code here" }
       - { label: "Description", name: "body", widget: "markdown" }
       
