@@ -4,71 +4,81 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=JetBrains+Mono&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #000; --accent: #f1f704; --text: #fff; }
-        body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; }
+        :root { --bg: #000; --accent: #f1f704; --blur: 20px; --radius: 28px; }
+        body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; margin: 0; min-height: 100vh; }
         
-        header { 
-            position: sticky; top: 0; z-index: 1000; padding: 20px 5%;
-            background: rgba(0,0,0,0.8); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid #222; display: flex; justify-content: space-between;
+        /* THE SCANLINE TOOL */
+        .scanlines::before {
+            content: " "; display: block; position: fixed; top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
+            z-index: 999; pointer-events: none; background-size: 100% 2px, 3px 100%;
         }
 
-        .container { max-width: 1000px; margin: 40px auto; padding: 20px; display: grid; gap: 20px; }
-        .card { background: #111; border: 1px solid #222; border-radius: 20px; padding: 30px; display: none; } /* Hidden by default */
-        .show { display: block; } /* Show when data exists */
+        /* STICKY HEADER */
+        header { 
+            position: sticky; top: 0; z-index: 1000; padding: 20px 5%;
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(var(--blur)); -webkit-backdrop-filter: blur(var(--blur));
+            border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between;
+        }
+
+        .container { max-width: 1200px; margin: 40px auto; padding: 20px; display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; }
         
-        h1 { font-size: 1rem; letter-spacing: 2px; text-transform: uppercase; margin: 0; }
-        iframe { width: 100%; border-radius: 12px; border: none; margin-top: 15px; }
-        .nav-links a { color: #888; text-decoration: none; font-size: 0.7rem; margin-left: 20px; text-transform: uppercase; }
+        /* MODULE STYLES */
+        .card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius); padding: 30px; }
+        .Small { grid-column: span 4; }
+        .Medium { grid-column: span 8; }
+        .Full { grid-column: span 12; }
+
+        h1 { font-size: 1rem; letter-spacing: 3px; text-transform: uppercase; margin: 0; color: var(--accent); }
+        .tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; opacity: 0.5; text-transform: uppercase; }
+        iframe { width: 100%; border-radius: 12px; border: none; margin-top: 15px; background: #000; }
+        
+        @media (max-width: 800px) { .card { grid-column: span 12 !important; } }
     </style>
 </head>
-<body>
+<body id="main-body">
 
 <header>
-    <h1 id="site-name">ARASH IRANI</h1>
-    <nav class="nav-links">
-        <a href="#bio-section">About</a>
-        <a href="#video-section">Work</a>
-    </nav>
+    <h1 id="site-name">PORTFOLIO</h1>
 </header>
 
-<main class="container">
-    <section id="bio-section" class="card">
-        <h3 style="color: var(--accent); font-size: 0.7rem; text-transform: uppercase;">About</h3>
-        <p id="bio-text"></p>
-    </section>
-
-    <section id="video-section" class="card">
-        <h3 style="color: var(--accent); font-size: 0.7rem; text-transform: uppercase;">Featured Work</h3>
-        <div id="video-container"></div>
-    </section>
-</main>
+<main class="container" id="module-container"></main>
 
 <script>
-    async function loadSite() {
+    async function initSite() {
         const res = await fetch('/content/settings.json');
         const data = await res.json();
 
-        if (data.name) document.getElementById('site-name').textContent = data.name;
+        // 1. APPLY DESIGN TOOLS
+        const root = document.documentElement.style;
+        if(data.accent) root.setProperty('--accent', data.accent);
+        if(data.bg_style === "Midnight") root.setProperty('--bg', '#0a0a0f');
+        if(data.bg_style === "Studio Grey") root.setProperty('--bg', '#1a1a1a');
+        if(data.blur_strength === "None") root.setProperty('--blur', '0px');
+        if(data.blur_strength === "Heavy") root.setProperty('--blur', '50px');
+        if(data.roundness === "Sharp") root.setProperty('--radius', '4px');
+        if(data.roundness === "Soft") root.setProperty('--radius', '15px');
+        if(data.show_scanlines) document.getElementById('main-body').classList.add('scanlines');
 
-        // Smart Show/Hide Bio
-        if (data.show_bio && data.bio) {
-            document.getElementById('bio-section').classList.add('show');
-            document.getElementById('bio-text').textContent = data.bio;
-        }
+        if(data.site_name) document.getElementById('site-name').textContent = data.site_name;
 
-        // Smart Show/Hide Video
-        if (data.show_video && data.video_url) {
-            document.getElementById('video-section').classList.add('show');
-            document.getElementById('video-container').innerHTML = `<iframe src="${data.video_url}" height="300"></iframe>`;
-        }
-
-        if (data.accent) document.documentElement.style.setProperty('--accent', data.accent);
-        if (data.css) { const s = document.createElement('style'); s.textContent = data.css; document.head.appendChild(s); }
+        // 2. BUILD MODULES
+        const container = document.getElementById('module-container');
+        (data.blocks || []).forEach(block => {
+            const card = document.createElement('div');
+            card.className = `card ${block.width || 'Full'}`;
+            
+            if(block.type === "text_block") {
+                card.innerHTML = `<span class="tag">${block.title || 'Info'}</span><div style="margin-top:10px">${block.body || ''}</div>`;
+            } else if(block.type === "video_block") {
+                card.innerHTML = `<span class="tag">${block.title || 'Media'}</span><iframe src="${block.url}" height="350"></iframe>`;
+            }
+            container.appendChild(card);
+        });
     }
-    loadSite();
+    initSite();
 </script>
 </body>
 </html>
