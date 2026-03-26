@@ -26,11 +26,13 @@ collections:
                 name: "about_module"
                 fields:
                   - { label: "Module Label", name: "title", widget: "string" }
-                  - label: "Body Copy"
+                  - label: "Body Copy (Visual Editor)"
                     name: "body"
                     widget: "markdown"
+                    # This forces it to feel like Google Docs (WYSIWYG)
+                    default_view: "visual"
                     minimal: false
-                    buttons: ["heading-one", "heading-two", "italic", "bold", "link", "quote", "code", "bulleted-list", "numbered-list"]
+                    buttons: ["heading-one", "heading-two", "bold", "italic", "code", "link", "quote", "bulleted-list", "numbered-list"]
                     editor_components: ["image", "video", "audio"]
               
               - label: "Video Gallery"
