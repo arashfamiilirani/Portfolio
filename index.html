@@ -4,80 +4,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #000; --accent: #f1f704; --text: #fff; --panel: rgba(20,20,22,0.7); }
-        body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; scroll-behavior: smooth; }
+        :root { --bg: #000; --accent: #f1f704; --text: #fff; }
+        body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; }
         
-        /* STICKY HEADER */
         header { 
-            position: sticky; top: 0; z-index: 10000;
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 15px 5%; background: rgba(0,0,0,0.8); backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            position: sticky; top: 0; z-index: 1000; padding: 20px 5%;
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid #222; display: flex; justify-content: space-between;
         }
 
-        .container { 
-            max-width: 1200px; margin: 60px auto; padding: 0 20px;
-            display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; 
-        }
-
-        /* DYNAMIC CARD STYLES */
-        .card { 
-            background: var(--panel); border: 1px solid rgba(255,255,255,0.1); 
-            border-radius: 28px; padding: 40px; transition: 0.3s; 
-        }
-        .Small { grid-column: span 4; }
-        .Large { grid-column: span 8; }
-        .Full-Width { grid-column: span 12; }
-
-        nav a { color: #888; text-decoration: none; font-size: 0.75rem; text-transform: uppercase; margin-left: 25px; letter-spacing: 2px; transition: 0.3s; }
-        nav a:hover { color: var(--accent); }
-        .tag { color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 10px; text-transform: uppercase; margin-bottom: 15px; display: block; }
-        iframe { width: 100%; border-radius: 12px; margin-top: 20px; border: none; }
+        .container { max-width: 1000px; margin: 40px auto; padding: 20px; display: grid; gap: 20px; }
+        .card { background: #111; border: 1px solid #222; border-radius: 20px; padding: 30px; display: none; } /* Hidden by default */
+        .show { display: block; } /* Show when data exists */
+        
+        h1 { font-size: 1rem; letter-spacing: 2px; text-transform: uppercase; margin: 0; }
+        iframe { width: 100%; border-radius: 12px; border: none; margin-top: 15px; }
+        .nav-links a { color: #888; text-decoration: none; font-size: 0.7rem; margin-left: 20px; text-transform: uppercase; }
     </style>
 </head>
 <body>
 
 <header>
-    <div id="site-name-box"><h1 style="font-size: 1rem; letter-spacing: 3px; margin: 0;" id="site-name">...</h1></div>
-    <nav id="main-nav"></nav>
+    <h1 id="site-name">ARASH IRANI</h1>
+    <nav class="nav-links">
+        <a href="#bio-section">About</a>
+        <a href="#video-section">Work</a>
+    </nav>
 </header>
 
-<main class="container" id="content-builder"></main>
+<main class="container">
+    <section id="bio-section" class="card">
+        <h3 style="color: var(--accent); font-size: 0.7rem; text-transform: uppercase;">About</h3>
+        <p id="bio-text"></p>
+    </section>
+
+    <section id="video-section" class="card">
+        <h3 style="color: var(--accent); font-size: 0.7rem; text-transform: uppercase;">Featured Work</h3>
+        <div id="video-container"></div>
+    </section>
+</main>
 
 <script>
-    async function buildSite() {
+    async function loadSite() {
         const res = await fetch('/content/settings.json');
         const data = await res.json();
 
-        // 1. Build Header & Name
-        document.getElementById('site-name').textContent = data.site_name || "ARASH IRANI";
-        const nav = document.getElementById('main-nav');
-        (data.nav_links || []).forEach(link => {
-            nav.innerHTML += `<a href="#${link.id}">${link.label}</a>`;
-        });
+        if (data.name) document.getElementById('site-name').textContent = data.name;
 
-        // 2. Build Page Sections
-        const builder = document.getElementById('content-builder');
-        (data.sections || []).forEach(sec => {
-            let embed = sec.embed_url ? `<iframe src="${sec.embed_url}" height="300"></iframe>` : '';
-            builder.innerHTML += `
-                <section class="card ${sec.size.replace(' ', '-')}" id="${sec.id}">
-                    <span class="tag">${sec.title}</span>
-                    <div>${sec.body || ''}</div>
-                    ${embed}
-                </section>
-            `;
-        });
-
-        // 3. Custom styles
-        if (data.accent) document.documentElement.style.setProperty('--accent', data.accent);
-        if (data.css) {
-            const s = document.createElement('style'); s.textContent = data.css; document.head.appendChild(s);
+        // Smart Show/Hide Bio
+        if (data.show_bio && data.bio) {
+            document.getElementById('bio-section').classList.add('show');
+            document.getElementById('bio-text').textContent = data.bio;
         }
+
+        // Smart Show/Hide Video
+        if (data.show_video && data.video_url) {
+            document.getElementById('video-section').classList.add('show');
+            document.getElementById('video-container').innerHTML = `<iframe src="${data.video_url}" height="300"></iframe>`;
+        }
+
+        if (data.accent) document.documentElement.style.setProperty('--accent', data.accent);
+        if (data.css) { const s = document.createElement('style'); s.textContent = data.css; document.head.appendChild(s); }
     }
-    buildSite();
+    loadSite();
 </script>
 </body>
 </html>
