@@ -10,36 +10,22 @@ public_folder: "/assets/img"
 
 collections:
   - name: "settings"
-    label: "Site Builder"
+    label: "Site Editor"
     files:
       - name: "general"
-        label: "Design & Content"
+        label: "Edit Your Page"
         file: "content/settings.json"
         fields:
-          # --- DESIGN TOOLS (REPLACES CSS BOX) ---
-          - { label: "1. Brand Name", name: "site_name", widget: "string", required: false }
-          - { label: "2. Accent Color", name: "accent", widget: "color", default: "#f1f704", required: false }
-          - { label: "3. Background Style", name: "bg_style", widget: "select", options: ["Pitch Black", "Midnight", "Studio Grey"], default: "Pitch Black", required: false }
-          - { label: "4. Glass Blur Strength", name: "blur_strength", widget: "select", options: ["None", "Light", "Heavy"], default: "Light", required: false }
-          - { label: "5. Corner Roundness", name: "roundness", widget: "select", options: ["Sharp", "Soft", "Apple Style"], default: "Apple Style", required: false }
-          - { label: "6. Show Scanlines?", name: "show_scanlines", widget: "boolean", default: false, required: false }
-
-          # --- MODULE BUILDER ---
-          - label: "7. Page Sections (Add/Move/Remove)"
-            name: "blocks"
+          - { label: "Website Name", name: "site_name", widget: "string", required: false }
+          - { label: "Brand Color", name: "accent", widget: "color", default: "#f1f704", required: false }
+          
+          # THE NEW, EASY SECTION BUILDER
+          - label: "Page Sections"
+            name: "sections"
             widget: "list"
             required: false
-            types:
-              - label: "Text/Bio Module"
-                name: "text_block"
-                fields:
-                  - { label: "Title", name: "title", widget: "string", required: false }
-                  - { label: "Content", name: "body", widget: "markdown", required: false }
-                  - { label: "Width", name: "width", widget: "select", options: ["Small", "Medium", "Full"], default: "Medium" }
-              
-              - label: "Video/Audio Module"
-                name: "video_block"
-                fields:
-                  - { label: "Title", name: "title", widget: "string", required: false }
-                  - { label: "Embed URL", name: "url", widget: "string", hint: "YouTube or SoundCloud Link", required: false }
-                  - { label: "Width", name: "width", widget: "select", options: ["Small", "Medium", "Full"], default: "Full" }
+            hint: "Click 'Add Page Sections' to create a new block on your website."
+            fields:
+              - { label: "Section Title (This automatically adds it to your Menu!)", name: "title", widget: "string", required: false }
+              - { label: "Content Editor", name: "body", widget: "markdown", hint: "👉 Click 'Rich Text' in the top right to use the Word-style editor!", required: false }
+              - { label: "Video/Audio Link (Optional)", name: "media_link", widget: "string", hint: "Paste a YouTube or SoundCloud URL here", required: false }
