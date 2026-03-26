@@ -8,56 +8,47 @@ backend:
 media_folder: "assets/img"
 public_folder: "/assets/img"
 
+# THIS turns off the split-screen, giving you a full-width "Blogger/Google Docs" canvas
+editor:
+  preview: false
+
 collections:
   - name: "pages"
-    label: "Editorial Layout"
+    label: "Site Builder (Drag & Drop)"
     files:
       - name: "home"
-        label: "Home Page"
+        label: "Main Page"
         file: "content/settings.json"
         fields:
-          - { label: "Site Logo Name", name: "site_name", widget: "string" }
-          - label: "Layout Modules"
+          - { label: "Brand / Logo Name", name: "site_name", widget: "string" }
+          - label: "Page Sections"
             name: "modules"
             widget: "list"
             summary: '{{fields.type}}'
             types:
-              - label: "Editorial Text / About"
-                name: "about_module"
+              - label: "Rich Text (Google Docs Style)"
+                name: "text_block"
                 fields:
-                  - { label: "Module Label", name: "title", widget: "string" }
-                  - label: "Body Copy"
+                  - { label: "Section Label (For your eyes only)", name: "title", widget: "string" }
+                  - label: "Content"
                     name: "body"
                     widget: "markdown"
-                    # Forces the "Google Doc" Visual mode
                     default_view: "visual"
                     minimal: false
-                    buttons: ["heading-one", "heading-two", "bold", "italic", "code", "link", "quote", "bulleted-list", "numbered-list"]
-                    editor_components: ["image", "video", "audio"]
+                    buttons: ["heading-one", "heading-two", "bold", "italic", "quote", "link", "bulleted-list"]
               
-              - label: "Video Gallery"
-                name: "video_module"
+              - label: "Cinematic Video"
+                name: "video_block"
                 fields:
-                  - { label: "Columns", name: "cols", widget: "select", options: ["1", "2"], default: "1" }
-                  - label: "Items"
+                  - { label: "Video URL (Vimeo/YouTube)", name: "url", widget: "string" }
+                  - { label: "Caption", name: "caption", widget: "string", required: false }
+
+              - label: "Audio / Soundscape Grid"
+                name: "audio_block"
+                fields:
+                  - label: "Audio Tracks"
                     name: "items"
                     widget: "list"
                     fields:
-                      - { label: "Vimeo/YT Embed URL", name: "url", widget: "string" }
-                      - { label: "Caption", name: "caption", widget: "string", required: false }
-
-              - label: "Music / Sound Design"
-                name: "audio_module"
-                fields:
-                  - label: "Tracks"
-                    name: "items"
-                    widget: "list"
-                    fields:
-                      - { label: "SoundCloud/Spotify Link", name: "url", widget: "string" }
-                      - { label: "Title", name: "title", widget: "string" }
-
-              - label: "Socials & Contact"
-                name: "contact_module"
-                fields:
-                  - { label: "Email", name: "email", widget: "string" }
-                  - { label: "Instagram Link", name: "insta", widget: "string" }
+                      - { label: "SoundCloud Embed URL", name: "url", widget: "string" }
+                      - { label: "Track Details (e.g., 96kHz 24-bit WAV)", name: "caption", widget: "string", required: false }
