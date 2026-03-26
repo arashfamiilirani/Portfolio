@@ -2,5 +2,5 @@
   "css": {
     "code": "/* Make links glow when I hover over them */\na:hover {\n  text-shadow: 0 0 10px var(--accent);\n}\n\n/* Add a subtle scanline effect to the background (Dead Space vibe) */\nbody::before {\n  content: \" \";\n  display: block;\n  position: fixed;\n  top: 0; left: 0; bottom: 0; right: 0;\n  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), \n              linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));\n  z-index: 9999;\n  pointer-events: none;\n  background-size: 100% 2px, 3px 100%;\n}"
   },
-  "accent": "#000000"
+  "accent": "#f1f704"
 }
