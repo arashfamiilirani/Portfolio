@@ -1,40 +1,41 @@
 backend:
   name: github
-  repo: arashfamiilirani/portfolio
+  repo: arashfamiilirani/portfolio # Ensure this matches your GitHub repo name
   branch: main
   base_url: https://www.arashfamiilirani.com
-  auth_endpoint: /api/auth
+  auth_endpoint: https://gatekeeper-v2.vercel.app/api/auth # This is the "Secret Sauce" for Vercel
 
 media_folder: "assets/img"
 public_folder: "/assets/img"
 
 collections:
-  - name: "settings"
-    label: "Site Builder"
+  - name: "pages"
+    label: "Editorial Layout"
     files:
-      - name: "general"
-        label: "Edit Editorial Content"
+      - name: "index"
+        label: "Home Page"
         file: "content/settings.json"
         fields:
-          - { label: "Site Logo/Name", name: "site_name", widget: "string" }
+          - { label: "Site Logo Text", name: "site_name", widget: "string", required: false }
           
-          - label: "Page Modules"
+          - label: "Modules (Add text or media)"
             name: "modules"
             widget: "list"
+            required: false
             types:
-              - label: "Editorial Text (Heading + Bio)"
+              - label: "Editorial Text Block"
                 name: "text_block"
                 fields:
-                  - { label: "Menu Title", name: "menu_title", widget: "string", required: false }
-                  - { label: "Large Heading", name: "heading", widget: "string", required: false }
-                  - { label: "Body Text", name: "body", widget: "markdown", required: false }
-                  - { label: "Alignment", name: "align", widget: "select", options: ["Left", "Center"], default: "Left" }
+                  - { label: "Nav Label (For Header)", name: "nav_label", widget: "string", required: false }
+                  - { label: "Huge Heading", name: "heading", widget: "string", required: false }
+                  - { label: "Body Copy", name: "body", widget: "markdown", required: false }
+                  - { label: "Layout Width", name: "width", widget: "select", options: ["Full", "Wide", "Narrow"], default: "Wide" }
 
-              - label: "Media Gallery (Videos/Audio)"
+              - label: "Media Collection"
                 name: "media_block"
                 fields:
-                  - { label: "Menu Title", name: "menu_title", widget: "string", required: false }
-                  - { label: "Columns", name: "cols", widget: "select", options: ["1", "2"], default: "1" }
+                  - { label: "Nav Label (For Header)", name: "nav_label", widget: "string", required: false }
+                  - { label: "Grid Columns", name: "cols", widget: "select", options: ["1", "2", "3"], default: "1" }
                   - label: "Items", name: "items", widget: "list", fields:
-                    - { label: "Embed URL", name: "url", widget: "string" }
+                    - { label: "YouTube/SoundCloud URL", name: "url", widget: "string", required: false }
                     - { label: "Caption", name: "caption", widget: "string", required: false }
