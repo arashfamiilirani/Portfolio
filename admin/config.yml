@@ -2,7 +2,6 @@ backend:
   name: github
   repo: arashfamiilirani/portfolio
   branch: main
-  # This tells the CMS to use your site, not Netlify, for the login
   base_url: https://www.arashfamiilirani.com
   auth_endpoint: /api/auth
 
@@ -10,19 +9,34 @@ media_folder: "assets/img"
 public_folder: "/assets/img"
 
 collections:
-  - name: "content"
-    label: "Website Content"
+  - name: "pages"
+    label: "Editorial Pages"
     files:
       - name: "home"
-        label: "Homepage"
+        label: "Home Page"
         file: "content/settings.json"
         fields:
-          - { label: "Site Name", name: "site_name", widget: "string" }
-          - { label: "Main Heading (Large)", name: "heading", widget: "string" }
-          - { label: "Bio / Description", name: "bio", widget: "markdown" }
-          - label: "Project Gallery"
-            name: "projects"
+          - { label: "Site Logo Name", name: "site_name", widget: "string" }
+          - label: "Page Modules"
+            name: "modules"
             widget: "list"
-            fields:
-              - { label: "Title", name: "title", widget: "string" }
-              - { label: "URL (YouTube/Vimeo/SoundCloud)", name: "url", widget: "string" }
+            summary: '{{fields.type}}'
+            types:
+              - label: "Text Module (Intro/Quotes)"
+                name: "text_block"
+                fields:
+                  - { label: "Heading", name: "title", widget: "string", required: false }
+                  - { label: "Body Copy", name: "body", widget: "markdown" }
+                  - { label: "Alignment", name: "align", widget: "select", options: ["left", "center", "right"], default: "left" }
+              
+              - label: "Media Module (Video/Audio)"
+                name: "media_block"
+                fields:
+                  - { label: "Module Label", name: "label", widget: "string", required: false }
+                  - { label: "Columns", name: "cols", widget: "select", options: ["1", "2"], default: "1" }
+                  - label: "Items"
+                    name: "items"
+                    widget: "list"
+                    fields:
+                      - { label: "URL", name: "url", widget: "string" }
+                      - { label: "Caption", name: "caption", widget: "string", required: false }
