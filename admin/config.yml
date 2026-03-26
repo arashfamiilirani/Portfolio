@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: arashfamiilirani/Portfolio
+  repo: arashfamiilirani/portfolio
   branch: main
   base_url: https://www.arashfamiilirani.com
   auth_endpoint: api/auth
@@ -10,9 +10,9 @@ media_folder: "assets/img"
 public_folder: "/assets/img"
 
 collections:
-  - name: "Portfolio"
+  - name: "portfolio"
     label: "My Sound Works"
-    folder: "content/Portfolio"
+    folder: "content/portfolio"
     create: true
     slug: "{{title}}"
     fields:
