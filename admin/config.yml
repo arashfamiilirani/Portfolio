@@ -10,38 +10,31 @@ public_folder: "/assets/img"
 
 collections:
   - name: "settings"
-    label: "Site Editor"
+    label: "Site Builder"
     files:
       - name: "general"
-        label: "Build Your Pages"
+        label: "Edit Editorial Content"
         file: "content/settings.json"
         fields:
-          - { label: "Website Name", name: "site_name", widget: "string", default: "Arash Irani" }
+          - { label: "Site Logo/Name", name: "site_name", widget: "string" }
           
-          # THE MODULAR BUILDER
-          - label: "Page Modules (Add text, videos, or galleries)"
+          - label: "Page Modules"
             name: "modules"
             widget: "list"
-            required: false
             types:
-              # TOOL 1: THE TEXT FORMATTER
-              - label: "Text & Typography Module"
-                name: "text_module"
+              - label: "Editorial Text (Heading + Bio)"
+                name: "text_block"
                 fields:
-                  - { label: "Menu Link Title (Optional)", name: "title", widget: "string", required: false }
-                  - { label: "Content", name: "body", widget: "markdown", hint: "Use 'Rich Text' mode for Bold, Italics, Links, and Headings." }
-                  - { label: "Module Width", name: "width", widget: "select", options: ["100% (Full Width)", "75% (Wide)", "50% (Half Page)"], default: "100% (Full Width)" }
-                  - { label: "Text Alignment", name: "alignment", widget: "select", options: ["Left", "Center", "Right"], default: "Left" }
-              
-              # TOOL 2: UNLIMITED MEDIA GRID
-              - label: "Media Gallery (Unlimited Videos/Audio)"
-                name: "media_module"
+                  - { label: "Menu Title", name: "menu_title", widget: "string", required: false }
+                  - { label: "Large Heading", name: "heading", widget: "string", required: false }
+                  - { label: "Body Text", name: "body", widget: "markdown", required: false }
+                  - { label: "Alignment", name: "align", widget: "select", options: ["Left", "Center"], default: "Left" }
+
+              - label: "Media Gallery (Videos/Audio)"
+                name: "media_block"
                 fields:
-                  - { label: "Menu Link Title (Optional)", name: "title", widget: "string", required: false }
-                  - { label: "Gallery Layout", name: "columns", widget: "select", options: ["1 Column (Massive)", "2 Columns (Grid)", "3 Columns (Compact)"], default: "2 Columns (Grid)" }
-                  - label: "Add Videos / Audio Tracks"
-                    name: "media_items"
-                    widget: "list"
-                    fields:
-                      - { label: "Embed URL (YouTube, Vimeo, SoundCloud)", name: "url", widget: "string" }
-                      - { label: "Caption (Optional)", name: "caption", widget: "string", required: false }
+                  - { label: "Menu Title", name: "menu_title", widget: "string", required: false }
+                  - { label: "Columns", name: "cols", widget: "select", options: ["1", "2"], default: "1" }
+                  - label: "Items", name: "items", widget: "list", fields:
+                    - { label: "Embed URL", name: "url", widget: "string" }
+                    - { label: "Caption", name: "caption", widget: "string", required: false }
