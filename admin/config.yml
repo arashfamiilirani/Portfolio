@@ -10,49 +10,51 @@ public_folder: "/assets/img"
 
 collections:
   - name: "pages"
-    label: "Editorial Content"
+    label: "Editorial Layout"
     files:
       - name: "home"
         label: "Home Page"
         file: "content/settings.json"
         fields:
-          - { label: "Site Logo Name", name: "site_name", widget: "string" }
-          - label: "Page Modules"
+          - { label: "Site Header Name", name: "site_name", widget: "string" }
+          - label: "Layout Modules"
             name: "modules"
             widget: "list"
-            summary: '{{fields.type}}'
+            summary: '{{fields.type}} - {{fields.title}}'
             types:
-              - label: "Text / About (Editorial)"
+              - label: "Editorial Text / About"
                 name: "about_module"
                 fields:
-                  - { label: "Headline", name: "title", widget: "string" }
+                  - { label: "Module Label", name: "title", widget: "string", hint: "Internal name (e.g. About Intro)" }
                   - label: "Body Copy"
                     name: "body"
                     widget: "markdown"
-                    # This enables the advanced editor tools
                     minimal: false
-                    buttons: ["heading-one", "heading-two", "italic", "bold", "link", "quote", "bulleted-list"]
+                    # These add the buttons you see in the screenshot plus more
+                    buttons: ["heading-one", "heading-two", "italic", "bold", "link", "quote", "bulleted-list", "numbered-list"]
+                    # THIS IS THE KEY: These are the "hidden" tools for embedding inside text
+                    editor_components: ["image", "video", "audio"] 
               
-              - label: "Video Gallery"
+              - label: "Video Gallery (Grid)"
                 name: "video_module"
                 fields:
                   - { label: "Columns", name: "cols", widget: "select", options: ["1", "2"], default: "1" }
-                  - label: "Items"
+                  - label: "Video Items"
                     name: "items"
                     widget: "list"
                     fields:
-                      - { label: "Vimeo/YT Embed URL", name: "url", widget: "string" }
+                      - { label: "Embed URL", name: "url", widget: "string" }
                       - { label: "Caption", name: "caption", widget: "string", required: false }
 
-              - label: "Audio / Sound Design"
+              - label: "Music / Sound Design"
                 name: "audio_module"
                 fields:
-                  - label: "Tracks"
+                  - label: "Audio Tracks"
                     name: "items"
                     widget: "list"
                     fields:
                       - { label: "SoundCloud/Spotify Link", name: "url", widget: "string" }
-                      - { label: "Title", name: "title", widget: "string" }
+                      - { label: "Track Title", name: "title", widget: "string" }
 
               - label: "Socials & Contact"
                 name: "contact_module"
