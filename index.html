@@ -7,51 +7,94 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
-        :root { --bg: #000; --text: #fff; --dim: #666; }
-        body { 
-            background: var(--bg); color: var(--text); 
-            font-family: 'Inter', sans-serif; margin: 0; 
-            font-weight: 200; -webkit-font-smoothing: antialiased;
-        }
-        
-        /* Fixed Minimal Header */
-        header { 
-            position: fixed; top: 0; width: 100%; padding: 40px; 
-            display: flex; justify-content: space-between; z-index: 1000;
-        }
-        .logo { font-size: 0.8rem; letter-spacing: 6px; text-transform: uppercase; font-weight: 600; }
+    :root { 
+        --bg: #000000; 
+        --text: #ffffff; 
+        --dim: #555555; 
+        --accent: #888888;
+    }
 
-        /* The Yulia Mahr Canvas */
-        .container { max-width: 1200px; margin: 0 auto; padding: 200px 40px; }
-        
-        /* Massive, thin typography */
-        h1 { 
-            font-size: 5rem; font-weight: 200; letter-spacing: -0.05em; 
-            margin-bottom: 50px; line-height: 1; 
-        }
-        .bio-content { 
-            font-size: 1.3rem; line-height: 1.8; color: #ccc; 
-            max-width: 800px; margin-bottom: 150px; 
-        }
+    body { 
+        background-color: var(--bg); 
+        color: var(--text); 
+        font-family: 'Inter', -apple-system, sans-serif; 
+        margin: 0; 
+        font-weight: 200; 
+        -webkit-font-smoothing: antialiased;
+    }
 
-        /* Clean Video Grid - No boxes, just the work */
-        .work-grid { display: grid; grid-template-columns: 1fr; gap: 100px; }
-        .work-item { width: 100%; }
-        .work-item iframe { 
-            width: 100%; aspect-ratio: 16/9; border: none; 
-            background: #080808; filter: grayscale(0.1); transition: 0.5s;
-        }
-        .work-item iframe:hover { filter: grayscale(0); }
-        .work-item p { 
-            margin-top: 20px; font-size: 0.7rem; 
-            text-transform: uppercase; letter-spacing: 3px; color: var(--dim); 
-        }
+    /* Minimalist Floating Navigation */
+    header { 
+        position: fixed; top: 0; width: 100%; padding: 50px; 
+        display: flex; justify-content: space-between; z-index: 1000;
+        letter-spacing: 5px; text-transform: uppercase; font-size: 0.7rem;
+    }
+    .logo { font-weight: 600; opacity: 0.8; }
 
-        @media (max-width: 800px) {
-            h1 { font-size: 3rem; }
-            .container { padding-top: 150px; }
-        }
-    </style>
+    /* The Main Canvas */
+    .container { 
+        max-width: 1400px; 
+        margin: 0 auto; 
+        padding: 250px 50px 100px; 
+    }
+
+    /* Yulia Mahr Style Heading */
+    h1 { 
+        font-size: clamp(3rem, 8vw, 6rem); /* Responsive massive text */
+        font-weight: 200; 
+        letter-spacing: -0.05em; 
+        line-height: 0.9; 
+        margin-bottom: 80px; 
+        max-width: 1000px;
+    }
+
+    /* Editorial Bio */
+    .bio-content { 
+        font-size: 1.4rem; 
+        line-height: 1.7; 
+        color: #999; 
+        max-width: 750px; 
+        margin-bottom: 180px; /* Massive gap before work starts */
+    }
+
+    /* The Work Grid */
+    .work-grid { 
+        display: grid; 
+        grid-template-columns: 1fr; /* Single column for focus */
+        gap: 150px; /* Dramatic spacing between projects */
+    }
+
+    .work-item { width: 100%; position: relative; }
+
+    /* Grayscale Video Previews */
+    .work-item iframe { 
+        width: 100%; 
+        aspect-ratio: 16/9; 
+        border: none; 
+        background: #080808; 
+        filter: grayscale(1) contrast(1.1); /* The "noir" look */
+        transition: filter 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .work-item iframe:hover { 
+        filter: grayscale(0) contrast(1); 
+    }
+
+    /* Tiny, spaced-out captions */
+    .caption { 
+        margin-top: 25px; 
+        font-size: 0.65rem; 
+        text-transform: uppercase; 
+        letter-spacing: 4px; 
+        color: var(--dim); 
+    }
+
+    @media (max-width: 768px) {
+        header { padding: 20px; }
+        .container { padding: 150px 20px; }
+        h1 { font-size: 3rem; }
+    }
+</style>
 </head>
 <body>
     <header><div class="logo" id="site-logo">PORTFOLIO</div></header>
