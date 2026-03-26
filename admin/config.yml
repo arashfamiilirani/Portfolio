@@ -10,15 +10,35 @@ public_folder: "/assets/img"
 
 collections:
   - name: "settings"
-    label: "Global Site Content"
+    label: "Site Builder"
     files:
       - name: "general"
-        label: "Edit Everything"
+        label: "Header & Content"
         file: "content/settings.json"
         fields:
-          - { label: "Main Name", name: "site_name", widget: "string" }
-          - { label: "Professional Title", name: "site_title", widget: "string", hint: "e.g. Sound Artist / Composer" }
-          - { label: "Location", name: "location", widget: "string" }
-          - { label: "Short Bio", name: "bio_text", widget: "text" }
+          - { label: "Site Name", name: "site_name", widget: "string" }
+          
+          # MENU BUILDER
+          - label: "Navigation Links"
+            name: "nav_links"
+            widget: "list"
+            summary: "{{fields.label}}"
+            fields:
+              - { label: "Link Label", name: "label", widget: "string", hint: "e.g., About" }
+              - { label: "Section ID", name: "id", widget: "string", hint: "e.g., about (lowercase, no spaces)" }
+
+          # SECTION BUILDER
+          - label: "Page Sections"
+            name: "sections"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Section Title", name: "title", widget: "string" }
+              - { label: "Section ID", name: "id", widget: "string", hint: "Must match the Section ID in your nav links" }
+              - { label: "Size", name: "size", widget: "select", options: ["Small", "Large", "Full Width"] }
+              - { label: "Content (Bio or Text)", name: "body", widget: "markdown" }
+              - { label: "Video/Audio URL", name: "embed_url", widget: "string", required: false }
+          
           - { label: "Accent Color", name: "accent", widget: "color" }
           - { label: "Custom CSS", name: "css", widget: "code", default_language: "css" }
+          
