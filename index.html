@@ -3,38 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arash Irani</title>
+    <title>Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
-        body { background: #000; color: #fff; font-family: 'Inter', sans-serif; margin: 0; font-weight: 200; }
-        header { position: fixed; top: 0; width: 100%; padding: 40px; z-index: 100; }
-        .logo { font-size: 0.8rem; letter-spacing: 5px; text-transform: uppercase; font-weight: 600; }
-        .container { max-width: 1100px; margin: 0 auto; padding: 180px 40px; }
-        h1 { font-size: 4rem; font-weight: 200; letter-spacing: -0.04em; margin-bottom: 40px; }
-        .bio { font-size: 1.2rem; line-height: 1.8; color: #aaa; max-width: 700px; margin-bottom: 80px; }
-        .grid { display: grid; gap: 60px; }
-        iframe { width: 100%; aspect-ratio: 16/9; border: none; background: #111; }
-        .caption { margin-top: 10px; font-size: 0.7rem; color: #666; text-transform: uppercase; letter-spacing: 2px; }
+        :root { --bg: #000; --text: #fff; --dim: #666; }
+        body { 
+            background: var(--bg); color: var(--text); 
+            font-family: 'Inter', sans-serif; margin: 0; 
+            font-weight: 200; -webkit-font-smoothing: antialiased;
+        }
+        
+        /* Fixed Minimal Header */
+        header { 
+            position: fixed; top: 0; width: 100%; padding: 40px; 
+            display: flex; justify-content: space-between; z-index: 1000;
+        }
+        .logo { font-size: 0.8rem; letter-spacing: 6px; text-transform: uppercase; font-weight: 600; }
+
+        /* The Yulia Mahr Canvas */
+        .container { max-width: 1200px; margin: 0 auto; padding: 200px 40px; }
+        
+        /* Massive, thin typography */
+        h1 { 
+            font-size: 5rem; font-weight: 200; letter-spacing: -0.05em; 
+            margin-bottom: 50px; line-height: 1; 
+        }
+        .bio-content { 
+            font-size: 1.3rem; line-height: 1.8; color: #ccc; 
+            max-width: 800px; margin-bottom: 150px; 
+        }
+
+        /* Clean Video Grid - No boxes, just the work */
+        .work-grid { display: grid; grid-template-columns: 1fr; gap: 100px; }
+        .work-item { width: 100%; }
+        .work-item iframe { 
+            width: 100%; aspect-ratio: 16/9; border: none; 
+            background: #080808; filter: grayscale(0.1); transition: 0.5s;
+        }
+        .work-item iframe:hover { filter: grayscale(0); }
+        .work-item p { 
+            margin-top: 20px; font-size: 0.7rem; 
+            text-transform: uppercase; letter-spacing: 3px; color: var(--dim); 
+        }
+
+        @media (max-width: 800px) {
+            h1 { font-size: 3rem; }
+            .container { padding-top: 150px; }
+        }
     </style>
 </head>
 <body>
-    <header><div class="logo" id="site-title">ARASH IRANI</div></header>
+    <header><div class="logo" id="site-logo">PORTFOLIO</div></header>
+
     <main class="container">
         <h1 id="main-heading"></h1>
-        <div class="bio" id="bio-content"></div>
-        <div id="project-grid" class="grid"></div>
+        <div class="bio-content" id="bio-text"></div>
+        <div class="work-grid" id="project-list"></div>
     </main>
+
     <script>
-        fetch('/content/settings.json').then(res => res.json()).then(data => {
-            document.getElementById('site-title').textContent = data.site_name || "ARASH IRANI";
-            document.getElementById('main-heading').textContent = data.heading || "";
-            document.getElementById('bio-content').innerHTML = marked.parse(data.bio || "");
-            const grid = document.getElementById('project-grid');
-            (data.projects || []).forEach(p => {
-                grid.innerHTML += `<div><iframe src="${p.url}"></iframe><div class="caption">${p.title}</div></div>`;
-            });
-        });
+        async function loadSite() {
+            try {
+                const response = await fetch('/content/settings.json');
+                const data = await response.json();
+                
+                document.getElementById('site-logo').textContent = data.site_name || "ARASH IRANI";
+                document.getElementById('main-heading').textContent = data.heading || "";
+                document.getElementById('bio-text').innerHTML = marked.parse(data.bio || "");
+
+                const list = document.getElementById('project-list');
+                (data.projects || []).forEach(p => {
+                    // Check if it's a SoundCloud link to adjust height
+                    const isSoundCloud = p.url.includes('soundcloud.com');
+                    const frameStyle = isSoundCloud ? 'height:166px; aspect-ratio:auto;' : '';
+                    
+                    list.innerHTML += `
+                        <div class="work-item">
+                            <iframe src="${p.url}" style="${frameStyle}" allow="autoplay"></iframe>
+                            <p>${p.title || ''}</p>
+                        </div>`;
+                });
+            } catch (err) {
+                console.error("Content not found. Please publish from the admin page.");
+            }
+        }
+        loadSite();
     </script>
 </body>
 </html>
