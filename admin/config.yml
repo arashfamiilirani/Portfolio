@@ -5,30 +5,20 @@ backend:
   base_url: https://www.arashfamiilirani.com
   auth_endpoint: /api/auth
 
-# This allows you to save drafts and preview before the public sees them
-publish_mode: editorial_workflow
-
 media_folder: "assets/img"
 public_folder: "/assets/img"
 
 collections:
   - name: "settings"
-    label: "Site Appearance"
+    label: "Global Site Content"
     files:
       - name: "general"
-        label: "Branding & Colors"
+        label: "Edit Everything"
         file: "content/settings.json"
         fields:
+          - { label: "Main Name", name: "site_name", widget: "string" }
+          - { label: "Professional Title", name: "site_title", widget: "string", hint: "e.g. Sound Artist / Composer" }
+          - { label: "Location", name: "location", widget: "string" }
+          - { label: "Short Bio", name: "bio_text", widget: "text" }
           - { label: "Accent Color", name: "accent", widget: "color" }
           - { label: "Custom CSS", name: "css", widget: "code", default_language: "css" }
-
-  - name: "portfolio"
-    label: "My Sound Works"
-    folder: "content/portfolio"
-    create: true
-    slug: "{{title}}"
-    fields:
-      - { label: "Project Title", name: "title", widget: "string" }
-      - { label: "Category", name: "category", widget: "select", options: ["Sound Design", "Composition", "Audio Engineering"] }
-      - { label: "Embed URL", name: "link", widget: "string", hint: "YouTube/SoundCloud embed URL" }
-      - { label: "Description", name: "body", widget: "markdown" }
