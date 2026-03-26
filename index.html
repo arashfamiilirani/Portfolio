@@ -3,137 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arash Irani | Sound Artist</title>
+    <title>Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=JetBrains+Mono&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg: #000000;
-            --accent: #f1f704;
-            --panel: #111111;
-            --text: #ffffff;
-            --text-dim: #888888;
-        }
-
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 0;
-            min-height: 200vh; /* Adds height so you can actually scroll */
-        }
-
-        /* STICKY HEADER FIXED */
-        header {
-            position: sticky;
-            top: 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 5%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border-bottom: 1px solid #222;
-            z-index: 10000;
-        }
-
-        .logo h1 { font-size: 0.9rem; letter-spacing: 3px; text-transform: uppercase; margin: 0; }
+        :root { --bg: #000; --accent: #f1f704; --text: #fff; --text-dim: #888; }
+        body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; min-height: 110vh; }
         
-        nav a {
-            color: var(--text-dim);
-            text-decoration: none;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-left: 20px;
+        header { 
+            position: sticky; top: 0; display: flex; justify-content: space-between; 
+            padding: 20px 5%; background: rgba(0,0,0,0.8); backdrop-filter: blur(15px);
+            border-bottom: 1px solid #222; z-index: 1000;
         }
 
-        /* BENTO GRID */
-        .container {
-            max-width: 1200px;
-            margin: 50px auto;
-            padding: 20px;
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 20px;
-        }
-
-        .card {
-            background: var(--panel);
-            border: 1px solid #222;
-            border-radius: 24px;
-            padding: 40px;
-            min-height: 300px;
-        }
-
+        .container { max-width: 1200px; margin: 50px auto; padding: 20px; display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; }
+        .card { background: #111; border: 1px solid #222; border-radius: 24px; padding: 40px; }
         .hero { grid-column: span 8; }
         .bio { grid-column: span 4; }
         .wide { grid-column: span 12; }
-
-        .tag {
-            color: var(--accent);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-            display: block;
-        }
-
-        h2 { font-size: 2rem; margin: 10px 0; }
-
-        @media (max-width: 800px) {
-            .hero, .bio, .wide { grid-column: span 12; }
-        }
+        
+        .tag { color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; text-transform: uppercase; }
+        h1 { font-size: 0.9rem; letter-spacing: 3px; margin: 0; }
+        h2 { font-size: 2.5rem; margin: 10px 0; letter-spacing: -0.02em; }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="logo"><h1>ARASH IRANI</h1></div>
-    <nav>
-        <a href="#sound">Sound</a>
-        <a href="#photo">Photo</a>
-        <a href="#bio">Bio</a>
-    </nav>
+    <div class="logo"><h1 id="display-name">LOADING...</h1></div>
+    <nav style="font-size: 0.7rem; letter-spacing: 2px; color: var(--text-dim);">PORTFOLIO</nav>
 </header>
 
 <main class="container">
-    <section class="card hero" id="sound">
-        <span class="tag">Featured Work</span>
-        <h2>Sound Design & Composition</h2>
-        <p style="color: var(--text-dim)">Atmospheric textures and high-fidelity audio engineering.</p>
+    <section class="card hero">
+        <span class="tag" id="display-title">Title</span>
+        <h2 id="display-hero-name">Name</h2>
+        <p id="display-location" style="color: var(--text-dim)"></p>
     </section>
 
-    <section class="card bio" id="bio">
-        <span class="tag">Profile</span>
-        <h3>Montreal, QC</h3>
-        <p style="color: var(--text-dim)">Professional Sound Artist based in Quebec.</p>
+    <section class="card bio">
+        <span class="tag">About</span>
+        <p id="display-bio" style="line-height: 1.8;"></p>
     </section>
 
-    <section class="card wide" id="photo">
-        <span class="tag">Portfolio</span>
-        <h2>Photography & Projects</h2>
+    <section class="card wide">
+        <span class="tag">Works</span>
+        <div id="portfolio-list">Projects appear here.</div>
     </section>
 </main>
 
 <script>
-    // Loads dashboard settings without crashing the page
-    async function loadSettings() {
+    async function syncContent() {
         try {
             const res = await fetch('/content/settings.json');
-            if (res.ok) {
-                const data = await res.json();
-                if (data.accent) document.documentElement.style.setProperty('--accent', data.accent);
-                if (data.css) {
-                    const style = document.createElement('style');
-                    style.textContent = data.css;
-                    document.head.appendChild(style);
-                }
+            const data = await res.json();
+            
+            // MAP DATA TO PAGE
+            document.getElementById('display-name').textContent = data.site_name || "ARASH IRANI";
+            document.getElementById('display-hero-name').textContent = data.site_name || "ARASH IRANI";
+            document.getElementById('display-title').textContent = data.site_title || "Sound Artist";
+            document.getElementById('display-location').textContent = data.location || "Montreal, QC";
+            document.getElementById('display-bio').textContent = data.bio_text || "Bio goes here...";
+            
+            if (data.accent) document.documentElement.style.setProperty('--accent', data.accent);
+            if (data.css) {
+                const style = document.createElement('style');
+                style.textContent = data.css;
+                document.head.appendChild(style);
             }
-        } catch (e) { console.error("Settings load failed"); }
+        } catch (e) { console.log("First time? Edit settings in dashboard."); }
     }
-    loadSettings();
+    syncContent();
 </script>
 
 </body>
