@@ -9,7 +9,7 @@ media_folder: "assets/img"
 public_folder: "/assets/img"
 
 editor:
-  preview: false   # We'll use our own custom preview in admin/preview.js
+  preview: false   # We'll use our own custom preview
 
 collections:
   - name: "pages"
@@ -22,7 +22,7 @@ collections:
           # ----- SITE NAME -----
           - { label: "Site Name (Logo)", name: "site_name", widget: "string", hint: "Appears in header" }
 
-          # ----- THEME SETTINGS (NEW) -----
+          # ----- THEME SETTINGS -----
           - label: "Theme Settings"
             name: "theme"
             widget: "object"
@@ -47,37 +47,72 @@ collections:
                 }
               - { label: "Heading Size (e.g., 4.5rem)", name: "heading_size", widget: "string", default: "4.5rem" }
 
-          # ----- PAGE SECTIONS (DRAG & DROP BLOCKS) -----
-          - label: "Page Sections"
-            name: "modules"
-            widget: "list"
-            summary: '{{fields.type}}'
-            types:
-              - label: "Rich Text Block"
-                name: "text_block"
-                fields:
-                  - { label: "Navigation Title (shown in menu)", name: "title", widget: "string", required: true, hint: "This will appear in the header menu" }
-                  - { 
-                      label: "Content", 
-                      name: "body", 
-                      widget: "markdown", 
-                      default_view: "visual", 
-                      buttons: ["heading-one", "heading-two", "bold", "italic", "quote", "link", "bulleted-list"] 
-                    }
-              
-              - label: "Video"
-                name: "video_block"
-                fields:
-                  - { label: "Navigation Title", name: "caption", widget: "string", required: true, hint: "Menu label" }
-                  - { label: "Video URL (YouTube/Vimeo embed link)", name: "url", widget: "string" }
+          # ----- SOCIAL MEDIA LINKS -----
+          - label: "Social Links (header icons)"
+            name: "social_links"
+            widget: "object"
+            collapsed: false
+            fields:
+              - { label: "Instagram URL", name: "instagram", widget: "string", required: false, hint: "e.g., https://instagram.com/..." }
+              - { label: "YouTube URL", name: "youtube", widget: "string", required: false }
+              - { label: "SoundCloud URL", name: "soundcloud", widget: "string", required: false }
+              - { label: "Spotify URL", name: "spotify", widget: "string", required: false }
+              - { label: "Email (optional)", name: "email", widget: "string", required: false }
 
-              - label: "Audio Grid"
-                name: "audio_block"
+          # ----- PAGE SECTIONS (DRAG & DROP) -----
+          - label: "Page Sections (reorder by dragging)"
+            name: "sections"
+            widget: "list"
+            summary: '{{fields.title}} ({{fields.type}})'
+            types:
+              # Bio / CV section
+              - label: "Bio / CV"
+                name: "bio"
                 fields:
-                  - { label: "Navigation Title", name: "caption", widget: "string", required: true, hint: "Menu label" }
-                  - label: "Tracks"
-                    name: "items"
+                  - { label: "Section Title (shown in menu)", name: "title", widget: "string", default: "Bio / CV", required: true }
+                  - { label: "Content", name: "body", widget: "markdown", default_view: "visual", buttons: ["heading-one", "heading-two", "bold", "italic", "quote", "link", "bulleted-list"] }
+
+              # Video Reel section (grid of videos)
+              - label: "Video Reel"
+                name: "video_reel"
+                fields:
+                  - { label: "Section Title", name: "title", widget: "string", default: "Video Reels", required: true }
+                  - label: "Videos"
+                    name: "videos"
                     widget: "list"
                     fields:
-                      - { label: "SoundCloud Embed URL", name: "url", widget: "string" }
+                      - { label: "Video URL (YouTube/Vimeo embed link)", name: "url", widget: "string" }
+                      - { label: "Caption", name: "caption", widget: "string", required: false }
+
+              # Music section (grid of audio embeds)
+              - label: "Music"
+                name: "music"
+                fields:
+                  - { label: "Section Title", name: "title", widget: "string", default: "Music", required: true }
+                  - label: "Tracks"
+                    name: "tracks"
+                    widget: "list"
+                    fields:
+                      - { label: "Embed URL (SoundCloud/Spotify)", name: "url", widget: "string" }
                       - { label: "Track Details", name: "caption", widget: "string", required: false }
+
+              # Sound Design section (another audio grid, but you can rename)
+              - label: "Sound Design"
+                name: "sound_design"
+                fields:
+                  - { label: "Section Title", name: "title", widget: "string", default: "Sound Design", required: true }
+                  - label: "Sound Pieces"
+                    name: "tracks"
+                    widget: "list"
+                    fields:
+                      - { label: "Embed URL", name: "url", widget: "string" }
+                      - { label: "Details", name: "caption", widget: "string", required: false }
+
+              # Contact section
+              - label: "Contact"
+                name: "contact"
+                fields:
+                  - { label: "Section Title", name: "title", widget: "string", default: "Contact", required: true }
+                  - { label: "Contact Text (optional)", name: "text", widget: "markdown", required: false, hint: "e.g., For inquiries, email me at ..." }
+
+              # Custom: you can add more types later, e.g., "image_gallery", "testimonial", etc.
