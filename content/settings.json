@@ -7,7 +7,7 @@
   "theme": {
     "bg": "#d9d5d5",
     "text": "#0a0a0a",
-    "accent": "#0b0b0b",
+    "accent": "#fbf9f9",
     "heading_font": "Cormorant Garamond, serif",
     "body_font": "Helvetica, sans-serif",
     "heading_size": "4.5rem"
