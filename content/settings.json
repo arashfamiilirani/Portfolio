@@ -22,7 +22,10 @@
     {
       "type": "bio",
       "title": "Bio / CV",
-      "body": "# Biography\n\nArash Famiilirani is a Montreal-based electroacoustic composer and sound artist whose work explores the boundaries between perception, time, and minimal sonic materials. A graduate of Concordia University’s Bachelor of Fine Arts program in Electroacoustic Studies, Famiilirani’s practice draws from both experimental composition and attentive listening, transforming subtle gestures and everyday sounds into immersive auditory experiences. His recent works investigate psychoacoustic phenomena and the tension between structure and stillness, inviting audiences to engage with sound as a living, perceptual field.\n\n## Education\n\n**Bachelor of Fine Arts** 2016–2021  \nElectroacoustic Studies  \nConcordia University, Montreal, Quebec\n\n**Diploma in Music** 2003–2007  \nClassical Theory and Performance  \nTehran Conservatoire (Nahavand Higher Education Institute), Tehran, Iran\n\n## Art and Music\n\n- Sound Engineer, Concordia Chamber Jazz Ensemble, Oscar Peterson Concert Hall, Montreal, 2022\n- Sound Engineer, Concordia Choir and Chamber Choir, Oscar Peterson Concert Hall, Montreal, 2021\n- Composer, 60x60 Concordia, Montreal, 2020\n- Composer, 60x60 Concordia, Montreal, 2019\n- Live Sound Designer/Performer, CLOrk goes Free Jazz, with Michael Pinsonneault and Eden Bahar, Concordia University, Montreal, 2019\n- Composer, 60x60 Concordia, Montreal, 2018\n- Producing Station IDs for radio CJLO 1690, Montreal, 2018\n- Live Sound Designer/Performer, Concordia Laptop Orchestra with Andrea Young, Concordia University, Montreal, 2018\n- Live Sound Designer/Performer, Set Phasers To Stun: CLOrk, Amanda Christie, & Damaris Baker, Eastern Bloc, Montreal, 2017\n- Composer and Sound Artist, Darchin Duo, Tehran, Iran, 2007–2015\n- Performer, Jazz Quintet, Da House, Tehran, Iran, 2014\n- Performer, Jazz Trio, Shamlou, Tehran, Iran, 2014\n- Performer, Jazz Quartet Orf, Tehran, Iran, 2012\n- Performer, Tehran Conservatoire Choir, Tehran University, Tehran, Iran, 2011"
+      "body": "# Biography\n\nArash Famiilirani is a Montreal-based electroacoustic composer and sound artist whose work explores the boundaries between perception, time, and minimal sonic materials. A graduate of Concordia University’s Bachelor of Fine Arts program in Electroacoustic Studies, Famiilirani’s practice draws from both experimental composition and attentive listening, transforming subtle gestures and everyday sounds into immersive auditory experiences. His recent works investigate psychoacoustic phenomena and the tension between structure and stillness, inviting audiences to engage with sound as a living, perceptual field.\n\n## Education\n\n**Bachelor of Fine Arts** 2016–2021  \nElectroacoustic Studies  \nConcordia University, Montreal, Quebec\n\n**Diploma in Music** 2003–2007  \nClassical Theory and Performance  \nTehran Conservatoire (Nahavand Higher Education Institute), Tehran, Iran\n\n## Art and Music\n\n- Sound Engineer, Concordia Chamber Jazz Ensemble, Oscar Peterson Concert Hall, Montreal, 2022\n- Sound Engineer, Concordia Choir and Chamber Choir, Oscar Peterson Concert Hall, Montreal, 2021\n- Composer, 60x60 Concordia, Montreal, 2020\n- Composer, 60x60 Concordia, Montreal, 2019\n- Live Sound Designer/Performer, CLOrk goes Free Jazz, with Michael Pinsonneault and Eden Bahar, Concordia University, Montreal, 2019\n- Composer, 60x60 Concordia, Montreal, 2018\n- Producing Station IDs for radio CJLO 1690, Montreal, 2018\n- Live Sound Designer/Performer, Concordia Laptop Orchestra with Andrea Young, Concordia University, Montreal, 2018\n- Live Sound Designer/Performer, Set Phasers To Stun: CLOrk, Amanda Christie, & Damaris Baker, Eastern Bloc, Montreal, 2017\n- Composer and Sound Artist, Darchin Duo, Tehran, Iran, 2007–2015\n- Performer, Jazz Quintet, Da House, Tehran, Iran, 2014\n- Performer, Jazz Trio, Shamlou, Tehran, Iran, 2014\n- Performer, Jazz Quartet Orf, Tehran, Iran, 2012\n- Performer, Tehran Conservatoire Choir, Tehran University, Tehran, Iran, 2011",
+      "style": {
+        "font_family": "Georgia, serif"
+      }
     },
     {
       "type": "video_reel",
@@ -37,7 +40,10 @@
           "url": "https://www.youtube.com/embed/96cjKm0XPRE",
           "caption": "Dey"
         }
-      ]
+      ],
+      "style": {
+        "font_family": "Georgia, serif"
+      }
     },
     {
       "type": "music",
@@ -45,20 +51,34 @@
       "layout": "list",
       "tracks": [
         {
-          "url": "https://on.soundcloud.com/oubxo4dGyqMplTTszZ"
+          "url": "https://on.soundcloud.com/Mdn9jU42PJduer0SgD"
         }
-      ]
+      ],
+      "style": {
+        "heading_color": "#d37171",
+        "text_color": "#f1e2e2",
+        "font_family": "Georgia, serif"
+      }
     },
     {
       "type": "sound_design",
       "title": "Sound Design",
       "layout": "list",
-      "tracks": []
+      "tracks": [],
+      "style": {
+        "heading_color": "#ca6b6b",
+        "text_color": "#f7e7e7",
+        "font_family": "Georgia, serif"
+      }
     },
     {
       "type": "contact",
       "title": "Contact",
-      "text": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\narash.fa.ir@gmail.com"
+      "text": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\narash.fa.ir@gmail.com",
+      "style": {
+        "heading_color": "#d74f4f",
+        "font_family": "Cormorant Garamond, serif"
+      }
     }
   ],
   "home_label": "Home"
