@@ -3,15 +3,15 @@
   "hero": {
     "image": "/assets/img/img_3547.jpeg",
     "credit": "",
-    "width": "75%",
+    "width": "100%",
     "height": "100vh",
-    "fit": "scale-down",
+    "fit": "fill",
     "alignment": "center"
   },
   "theme": {
-    "bg": "#ffffff",
+    "bg": "#f3f0f0",
     "text": "#111111",
-    "accent": "#000000",
+    "accent": "#8a8787",
     "heading_font": "Cormorant Garamond, serif",
     "body_font": "Inter, sans-serif",
     "heading_size": "4.5rem"
