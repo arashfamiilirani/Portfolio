@@ -1,7 +1,8 @@
 {
   "hero": {
-    "type": "image",
-    "image": "/assets/img/img_3547.jpeg"
+    "type": "video",
+    "image": "https://www.youtube.com/watch?v=aGUqCb4eXmM",
+    "video": "https://www.youtube.com/watch?v=aGUqCb4eXmM"
   },
   "theme": {
     "bg": "#ffefef",
@@ -19,6 +20,15 @@
   "site_name": "Arash Famiilirani",
   "home_label": "Arash Famiilirani",
   "sections": [
+    {
+      "type": "video_reel",
+      "title": "Video Reels",
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=aGUqCb4eXmM"
+        }
+      ]
+    },
     {
       "type": "contact",
       "title": "Contact"
