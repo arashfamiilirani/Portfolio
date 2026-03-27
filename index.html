@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Arash Famiilirani</title>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -22,6 +22,7 @@
             font-family: var(--body-font);
             font-weight: 300;
             line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
         }
         /* Header */
         .site-header {
@@ -60,6 +61,8 @@
             text-decoration: none;
             cursor: pointer;
             transition: color 0.2s;
+            padding: 0.5rem 0;  /* larger tap area */
+            display: inline-block;
         }
         .nav-links a:hover {
             color: var(--accent);
@@ -73,17 +76,16 @@
             font-size: 1.2rem;
             color: var(--text);
             text-decoration: none;
+            padding: 0.5rem;
         }
         .social-icons a:hover {
             color: var(--accent);
         }
-        /* Main content */
         .main-content {
             max-width: 1000px;
             margin: 0 auto;
             padding: 2rem 2rem 6rem;
         }
-        /* Hero */
         .hero img {
             max-width: 100%;
             height: auto;
@@ -97,7 +99,6 @@
             margin-top: 0.5rem;
             text-align: center;
         }
-        /* Sections (hidden by default) */
         .section {
             display: none;
             animation: fadeIn 0.3s ease;
@@ -109,7 +110,6 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        /* Bio */
         .bio h1 {
             font-size: var(--heading-size);
             line-height: 1.1;
@@ -121,7 +121,6 @@
             margin-bottom: 1.5rem;
             max-width: 85%;
         }
-        /* Video reel: grid vs list */
         .video_reel .video-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -140,7 +139,6 @@
             border: none;
             background: #f0f0f0;
         }
-        /* Audio sections */
         .music .audio-grid, .sound_design .audio-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -168,7 +166,7 @@
         }
         @media (max-width: 768px) {
             .site-header { flex-direction: column; gap: 0.5rem; text-align: center; }
-            .nav-links { justify-content: center; }
+            .nav-links { justify-content: center; gap: 1rem; }
             .social-icons { margin-left: 0; justify-content: center; }
             .bio p { max-width: 100%; }
             .bio h1 { font-size: calc(var(--heading-size) * 0.7); }
@@ -185,6 +183,25 @@
     <main class="main-content" id="main-content"></main>
 
     <script>
+        // Convert any YouTube watch/shorts URL to embed URL
+        function convertYouTubeUrl(url) {
+            if (!url) return url;
+            if (url.includes('/embed/') || url.includes('youtube.com/embed/')) return url;
+            if (url.includes('youtu.be/')) {
+                const id = url.split('youtu.be/')[1].split('?')[0];
+                return `https://www.youtube.com/embed/${id}`;
+            }
+            if (url.includes('watch?v=')) {
+                const id = url.split('v=')[1].split('&')[0];
+                return `https://www.youtube.com/embed/${id}`;
+            }
+            if (url.includes('/shorts/')) {
+                const id = url.split('/shorts/')[1].split('?')[0];
+                return `https://www.youtube.com/embed/${id}`;
+            }
+            return url;
+        }
+
         async function buildSite() {
             try {
                 const res = await fetch('/content/settings.json');
@@ -204,6 +221,9 @@
 
                 // Site name
                 document.getElementById('logo-text').textContent = data.site_name || 'ARASH FAMIILIRANI';
+
+                // Home button label
+                const homeLabel = data.home_label || 'Home';
 
                 // Social icons
                 const social = data.social_links || {};
@@ -248,7 +268,7 @@
                             <div class="${layout}">
                                 ${videos.map(v => `
                                     <div class="video-item">
-                                        <iframe src="${v.url}" frameborder="0" allowfullscreen></iframe>
+                                        <iframe src="${convertYouTubeUrl(v.url)}" frameborder="0" allowfullscreen></iframe>
                                         ${v.caption ? `<div class="caption">${v.caption}</div>` : ''}
                                     </div>
                                 `).join('')}
@@ -300,9 +320,9 @@
                     sectionsData.push({ id: sectionId, title: title });
                 });
 
-                // Navigation
+                // Navigation (Home button with custom label)
                 const navContainer = document.getElementById('nav-links');
-                navContainer.innerHTML = `<a data-section="hero">Home</a>` + 
+                navContainer.innerHTML = `<a data-section="hero">${homeLabel}</a>` + 
                     sectionsData.map(item => `<a data-section="${item.id}">${item.title}</a>`).join('');
 
                 // Click handlers
