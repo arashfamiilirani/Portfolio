@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Arash Famiilirani</title>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style id="theme-styles">
-        /* Default values – will be overridden by JS */
+        /* Default theme – overridden by JS */
         :root {
             --bg: #ffffff;
             --text: #111111;
@@ -15,16 +16,14 @@
             --body-font: 'Inter', sans-serif;
             --heading-size: 4.5rem;
         }
-        * { margin:0; padding:0; box-sizing:border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             background: var(--bg);
             color: var(--text);
             font-family: var(--body-font);
             font-weight: 300;
             line-height: 1.5;
-            transition: background 0.2s, color 0.2s;
         }
-        /* Header with nav */
         .site-header {
             position: sticky;
             top: 0;
@@ -50,6 +49,7 @@
             display: flex;
             gap: 1.5rem;
             flex-wrap: wrap;
+            align-items: center;
         }
         .nav-links a {
             font-family: var(--body-font);
@@ -63,45 +63,85 @@
         .nav-links a:hover {
             color: var(--accent);
         }
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-left: 1rem;
+        }
+        .social-icons a {
+            font-size: 1.2rem;
+            color: var(--text);
+            text-decoration: none;
+        }
+        .social-icons a:hover {
+            color: var(--accent);
+        }
         .container {
             max-width: 1000px;
             margin: 0 auto;
             padding: 2rem 2rem 6rem;
         }
-        .module {
+        .section {
             margin-bottom: 6rem;
             scroll-margin-top: 100px;
         }
-        .text_block h1, .text_block h2, .text_block h3 {
+        /* Bio section */
+        .bio h1, .bio h2, .bio h3 {
             font-family: var(--heading-font);
-            font-weight: 400;
         }
-        .text_block h1 {
+        .bio h1 {
             font-size: var(--heading-size);
             line-height: 1.1;
             margin: 2rem 0 1rem;
         }
-        .text_block p {
+        .bio p {
             font-size: 1.2rem;
             line-height: 1.6;
             margin-bottom: 1.5rem;
             max-width: 85%;
         }
-        .video_block iframe {
+        /* Video reel grid */
+        .video_reel .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+        .video_reel .video-item {
+            background: #f9f9f9;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .video_reel iframe {
             width: 100%;
             aspect-ratio: 16 / 9;
             border: none;
-            background: #f0f0f0;
         }
-        .audio_block {
+        .video_reel .caption {
+            padding: 0.5rem;
+            font-size: 0.8rem;
+            color: #666;
+            text-align: center;
+        }
+        /* Audio sections (music, sound design) */
+        .music .audio-grid, .sound_design .audio-grid {
             display: flex;
             flex-direction: column;
             gap: 2rem;
+            margin-top: 1.5rem;
         }
-        .audio-item iframe {
+        .music .audio-item, .sound_design .audio-item {
+            width: 100%;
+        }
+        .music iframe, .sound_design iframe {
             width: 100%;
             height: 166px;
             border: none;
+        }
+        /* Contact section */
+        .contact p {
+            font-size: 1.2rem;
+            line-height: 1.6;
         }
         .caption {
             font-size: 0.75rem;
@@ -114,8 +154,10 @@
         @media (max-width: 768px) {
             .site-header { flex-direction: column; gap: 0.5rem; text-align: center; }
             .nav-links { justify-content: center; }
-            .text_block p { max-width: 100%; }
-            .text_block h1 { font-size: calc(var(--heading-size) * 0.7); }
+            .social-icons { margin-left: 0; justify-content: center; }
+            .bio p { max-width: 100%; }
+            .bio h1 { font-size: calc(var(--heading-size) * 0.7); }
+            .video-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -123,8 +165,9 @@
     <header class="site-header">
         <div class="site-title" id="logo-text">ARASH FAMIILIRANI</div>
         <div class="nav-links" id="nav-links"></div>
+        <div class="social-icons" id="social-icons"></div>
     </header>
-    <main class="container" id="content-modules"></main>
+    <main class="container" id="content-sections"></main>
 
     <script>
         async function buildSite() {
@@ -132,8 +175,8 @@
                 const res = await fetch('/content/settings.json');
                 if (!res.ok) throw new Error('Settings not found');
                 const data = await res.json();
-                
-                // Apply theme settings
+
+                // Apply theme
                 if (data.theme) {
                     const root = document.documentElement.style;
                     if (data.theme.bg) root.setProperty('--bg', data.theme.bg);
@@ -145,50 +188,97 @@
                 }
 
                 document.getElementById('logo-text').textContent = data.site_name || 'ARASH FAMIILIRANI';
-                const container = document.getElementById('content-modules');
-                container.innerHTML = '';
-                const modules = data.modules || [];
 
-                // Build modules and collect navigation items
+                // Social icons
+                const social = data.social_links || {};
+                const socialContainer = document.getElementById('social-icons');
+                const socialLinks = [];
+                if (social.instagram) socialLinks.push(`<a href="${social.instagram}" target="_blank"><i class="fab fa-instagram"></i></a>`);
+                if (social.youtube) socialLinks.push(`<a href="${social.youtube}" target="_blank"><i class="fab fa-youtube"></i></a>`);
+                if (social.soundcloud) socialLinks.push(`<a href="${social.soundcloud}" target="_blank"><i class="fab fa-soundcloud"></i></a>`);
+                if (social.spotify) socialLinks.push(`<a href="${social.spotify}" target="_blank"><i class="fab fa-spotify"></i></a>`);
+                if (social.email) socialLinks.push(`<a href="mailto:${social.email}"><i class="fas fa-envelope"></i></a>`);
+                socialContainer.innerHTML = socialLinks.join('');
+
+                // Sections
+                const sections = data.sections || [];
+                const container = document.getElementById('content-sections');
+                container.innerHTML = '';
                 const navItems = [];
-                modules.forEach((m, idx) => {
-                    const section = document.createElement('section');
-                    section.className = `module ${m.type}`;
-                    const anchorId = `module-${idx}`;
-                    section.id = anchorId;
-                    
-                    let navLabel = '';
-                    if (m.type === 'text_block') {
-                        // Use title if provided, else fallback to first heading or index
-                        navLabel = m.title || `Section ${idx+1}`;
-                        section.innerHTML = marked.parse(m.body || '');
-                    } else if (m.type === 'video_block') {
-                        navLabel = m.caption || `Video ${idx+1}`;
-                        section.innerHTML = `
-                            <iframe src="${m.url}" frameborder="0" allowfullscreen></iframe>
-                            <div class="caption">${m.caption || ''}</div>
-                        `;
-                    } else if (m.type === 'audio_block') {
-                        navLabel = m.caption || `Audio ${idx+1}`;
-                        const tracks = (m.items || []).map(track => `
-                            <div class="audio-item">
-                                <iframe src="${track.url}" frameborder="0" scrolling="no"></iframe>
-                                <div class="caption">${track.caption || ''}</div>
+
+                sections.forEach((section, idx) => {
+                    const sectionDiv = document.createElement('section');
+                    const anchorId = `section-${idx}`;
+                    sectionDiv.id = anchorId;
+                    sectionDiv.className = `section ${section.type}`;
+
+                    let navTitle = section.title || 'Untitled';
+                    let contentHtml = '';
+
+                    if (section.type === 'bio') {
+                        contentHtml = marked.parse(section.body || '');
+                    } 
+                    else if (section.type === 'video_reel') {
+                        const videos = section.videos || [];
+                        contentHtml = `
+                            <h2 class="section-title">${section.title}</h2>
+                            <div class="video-grid">
+                                ${videos.map(v => `
+                                    <div class="video-item">
+                                        <iframe src="${v.url}" frameborder="0" allowfullscreen></iframe>
+                                        ${v.caption ? `<div class="caption">${v.caption}</div>` : ''}
+                                    </div>
+                                `).join('')}
                             </div>
-                        `).join('');
-                        section.innerHTML = tracks;
+                        `;
                     }
-                    container.appendChild(section);
-                    navItems.push({ label: navLabel, id: anchorId });
+                    else if (section.type === 'music') {
+                        const tracks = section.tracks || [];
+                        contentHtml = `
+                            <h2 class="section-title">${section.title}</h2>
+                            <div class="audio-grid">
+                                ${tracks.map(t => `
+                                    <div class="audio-item">
+                                        <iframe src="${t.url}" frameborder="0" scrolling="no"></iframe>
+                                        ${t.caption ? `<div class="caption">${t.caption}</div>` : ''}
+                                    </div>
+                                `).join('')}
+                            </div>
+                        `;
+                    }
+                    else if (section.type === 'sound_design') {
+                        const tracks = section.tracks || [];
+                        contentHtml = `
+                            <h2 class="section-title">${section.title}</h2>
+                            <div class="audio-grid">
+                                ${tracks.map(t => `
+                                    <div class="audio-item">
+                                        <iframe src="${t.url}" frameborder="0" scrolling="no"></iframe>
+                                        ${t.caption ? `<div class="caption">${t.caption}</div>` : ''}
+                                    </div>
+                                `).join('')}
+                            </div>
+                        `;
+                    }
+                    else if (section.type === 'contact') {
+                        contentHtml = `
+                            <h2 class="section-title">${section.title}</h2>
+                            ${section.text ? marked.parse(section.text) : '<p>Contact me via the social links above.</p>'}
+                        `;
+                    }
+
+                    sectionDiv.innerHTML = contentHtml;
+                    container.appendChild(sectionDiv);
+                    navItems.push({ label: navTitle, id: anchorId });
                 });
 
-                // Build navigation links
+                // Build navigation
                 const navContainer = document.getElementById('nav-links');
                 navContainer.innerHTML = navItems.map(item => 
                     `<a href="#${item.id}">${item.label}</a>`
                 ).join('');
-                
-                // Smooth scroll for anchor links
+
+                // Smooth scroll
                 document.querySelectorAll('.nav-links a').forEach(link => {
                     link.addEventListener('click', (e) => {
                         e.preventDefault();
@@ -201,7 +291,7 @@
                 });
             } catch (err) {
                 console.warn('Awaiting CMS publish…', err);
-                document.getElementById('content-modules').innerHTML = '<p style="color: #888;">Content will appear after you publish from the admin panel.</p>';
+                document.getElementById('content-sections').innerHTML = '<p style="color: #888;">Content will appear after you publish from the admin panel.</p>';
             }
         }
         buildSite();
