@@ -6,7 +6,8 @@
     <title>Arash Famiilirani</title>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style id="theme-styles">
+    <style>
+        /* Your existing CSS – keep it unchanged */
         :root {
             --bg: #ffffff;
             --text: #111111;
@@ -164,7 +165,6 @@
             opacity: 0.7;
             margin-top: 0.5rem;
         }
-        /* Contact form - always visible at bottom */
         .contact-section {
             margin-top: 4rem;
             padding-top: 2rem;
@@ -236,7 +236,6 @@
     <footer class="site-footer" id="footer"></footer>
 
     <script>
-        // Convert any YouTube watch/shorts URL to embed URL
         function convertYouTubeUrl(url) {
             if (!url) return url;
             if (url.includes('/embed/') || url.includes('youtube.com/embed/')) return url;
@@ -261,7 +260,7 @@
                 if (!res.ok) throw new Error('Settings not found');
                 const data = await res.json();
 
-                // Apply global theme
+                // Apply theme
                 if (data.theme) {
                     const root = document.documentElement.style;
                     if (data.theme.bg) root.setProperty('--bg', data.theme.bg);
@@ -273,7 +272,6 @@
                     if (data.theme.paragraph_size) root.setProperty('--paragraph-size', data.theme.paragraph_size);
                 }
 
-                // Site name and home label
                 document.getElementById('logo-text').textContent = data.site_name || 'ARASH FAMIILIRANI';
                 const homeLabel = data.home_label || 'Home';
 
@@ -288,19 +286,15 @@
                 if (social.email) socialLinks.push(`<a href="mailto:${social.email}"><i class="fas fa-envelope"></i></a>`);
                 socialContainer.innerHTML = socialLinks.join('');
 
-                // Dynamic copyright year
+                // Dynamic copyright
                 const currentYear = new Date().getFullYear();
-                const copyrightText = `© ${currentYear} Arash Famiilirani. All rights reserved.`;
-                document.getElementById('footer').innerHTML = `<p>${copyrightText}</p>`;
+                document.getElementById('footer').innerHTML = `<p>© ${currentYear} Arash Famiilirani. All rights reserved.</p>`;
 
-                // Hero image
+                // Hero
                 const hero = data.hero || {};
                 let heroStyle = 'width: 100%; height: auto;';
-                if (hero.size === 'contain') {
-                    heroStyle = 'max-width: 100%; height: auto; margin: 0 auto;';
-                } else if (hero.size === 'custom' && hero.width) {
-                    heroStyle = `width: ${hero.width}; height: auto; margin: 0 auto;`;
-                }
+                if (hero.size === 'contain') heroStyle = 'max-width: 100%; height: auto; margin: 0 auto;';
+                else if (hero.size === 'custom' && hero.width) heroStyle = `width: ${hero.width}; height: auto; margin: 0 auto;`;
                 const heroAlign = hero.alignment || 'center';
                 const heroHtml = `
                     <div class="hero" style="text-align: ${heroAlign};">
@@ -309,7 +303,6 @@
                     </div>
                 `;
 
-                // Build sections
                 const sections = data.sections || [];
                 const mainContainer = document.getElementById('main-content');
                 mainContainer.innerHTML = heroHtml;
@@ -322,13 +315,11 @@
                     let title = section.title || 'Untitled';
                     const style = section.style || {};
 
-                    // Wrapper styles
                     let wrapperStyles = '';
                     if (style.text_color) wrapperStyles += `color: ${style.text_color}; `;
                     if (style.font_family && style.font_family !== 'inherit') wrapperStyles += `font-family: ${style.font_family}; `;
                     if (style.text_size) wrapperStyles += `font-size: ${style.text_size}; `;
 
-                    // Heading styles
                     let headingStyles = '';
                     if (style.heading_color) headingStyles += `color: ${style.heading_color}; `;
                     if (style.heading_size) headingStyles += `font-size: ${style.heading_size}; `;
@@ -397,7 +388,7 @@
                     sectionsData.push({ id: sectionId, title: title });
                 });
 
-                // Always add the contact form at the end (hardcoded endpoint)
+                // Hardcoded contact form (using your endpoint)
                 const contactHtml = `
                     <div class="contact-section">
                         <h2>Contact</h2>
@@ -419,7 +410,6 @@
                 contactDiv.innerHTML = contactHtml;
                 mainContainer.appendChild(contactDiv);
 
-                // Handle form submission
                 const form = document.getElementById('contact-form');
                 const statusDiv = document.getElementById('form-status');
                 if (form) {
@@ -444,12 +434,11 @@
                     });
                 }
 
-                // Navigation (Home button + section tabs)
+                // Navigation
                 const navContainer = document.getElementById('nav-links');
                 navContainer.innerHTML = `<a data-section="hero">${homeLabel}</a>` + 
                     sectionsData.map(item => `<a data-section="${item.id}">${item.title}</a>`).join('');
 
-                // Click handlers
                 document.querySelectorAll('.nav-links a').forEach(link => {
                     link.addEventListener('click', (e) => {
                         const targetId = link.getAttribute('data-section');
@@ -467,7 +456,6 @@
                     });
                 });
 
-                // Initial state: show hero
                 document.getElementById('hero-section').style.display = 'block';
                 document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
 
