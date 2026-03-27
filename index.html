@@ -24,7 +24,6 @@
             line-height: 1.5;
             -webkit-font-smoothing: antialiased;
         }
-        /* Header */
         .site-header {
             position: sticky;
             top: 0;
@@ -61,7 +60,7 @@
             text-decoration: none;
             cursor: pointer;
             transition: color 0.2s;
-            padding: 0.5rem 0;  /* larger tap area */
+            padding: 0.5rem 0;
             display: inline-block;
         }
         .nav-links a:hover {
@@ -77,9 +76,6 @@
             color: var(--text);
             text-decoration: none;
             padding: 0.5rem;
-        }
-        .social-icons a:hover {
-            color: var(--accent);
         }
         .main-content {
             max-width: 1000px;
@@ -208,7 +204,7 @@
                 if (!res.ok) throw new Error('Settings not found');
                 const data = await res.json();
 
-                // Apply theme
+                // Apply global theme
                 if (data.theme) {
                     const root = document.documentElement.style;
                     if (data.theme.bg) root.setProperty('--bg', data.theme.bg);
@@ -219,10 +215,8 @@
                     if (data.theme.heading_size) root.setProperty('--heading-size', data.theme.heading_size);
                 }
 
-                // Site name
+                // Site name and home label
                 document.getElementById('logo-text').textContent = data.site_name || 'ARASH FAMIILIRANI';
-
-                // Home button label
                 const homeLabel = data.home_label || 'Home';
 
                 // Social icons
@@ -256,15 +250,33 @@
                     const sectionId = `section-${idx}`;
                     let contentHtml = '';
                     let title = section.title || 'Untitled';
+                    const style = section.style || {};
+
+                    // Build inline styles for the section
+                    let sectionStyles = '';
+                    if (style.text_color) sectionStyles += `color: ${style.text_color}; `;
+                    if (style.font_family && style.font_family !== 'inherit') sectionStyles += `font-family: ${style.font_family}; `;
+                    if (sectionStyles) contentHtml = `<div style="${sectionStyles}">` + (contentHtml) + `</div>`;
+
+                    // Build heading override styles (will be applied via a <style> block later)
+                    let headingStyles = '';
+                    if (style.heading_color) headingStyles += `color: ${style.heading_color}; `;
+                    if (style.heading_size) headingStyles += `font-size: ${style.heading_size}; `;
 
                     if (section.type === 'bio') {
-                        contentHtml = marked.parse(section.body || '');
+                        let bodyHtml = marked.parse(section.body || '');
+                        if (headingStyles) {
+                            // Wrap in a temporary div to apply heading styles
+                            bodyHtml = bodyHtml.replace(/<h1([^>]*)>/, `<h1 style="${headingStyles}" $1>`);
+                            bodyHtml = bodyHtml.replace(/<h2([^>]*)>/, `<h2 style="${headingStyles}" $1>`);
+                        }
+                        contentHtml = bodyHtml;
                     } 
                     else if (section.type === 'video_reel') {
                         const videos = section.videos || [];
                         const layout = section.layout === 'grid' ? 'video-grid' : 'video-list';
                         contentHtml = `
-                            <h2 class="section-title">${section.title}</h2>
+                            <h2 class="section-title" style="${headingStyles}">${section.title}</h2>
                             <div class="${layout}">
                                 ${videos.map(v => `
                                     <div class="video-item">
@@ -279,7 +291,7 @@
                         const tracks = section.tracks || [];
                         const layout = section.layout === 'grid' ? 'audio-grid' : 'audio-list';
                         contentHtml = `
-                            <h2 class="section-title">${section.title}</h2>
+                            <h2 class="section-title" style="${headingStyles}">${section.title}</h2>
                             <div class="${layout}">
                                 ${tracks.map(t => `
                                     <div class="audio-item">
@@ -294,7 +306,7 @@
                         const tracks = section.tracks || [];
                         const layout = section.layout === 'grid' ? 'audio-grid' : 'audio-list';
                         contentHtml = `
-                            <h2 class="section-title">${section.title}</h2>
+                            <h2 class="section-title" style="${headingStyles}">${section.title}</h2>
                             <div class="${layout}">
                                 ${tracks.map(t => `
                                     <div class="audio-item">
@@ -306,10 +318,16 @@
                         `;
                     }
                     else if (section.type === 'contact') {
-                        contentHtml = `
-                            <h2 class="section-title">${section.title}</h2>
-                            ${section.text ? marked.parse(section.text) : '<p>Contact me via the social links above.</p>'}
-                        `;
+                        let contactHtml = marked.parse(section.text || '<p>Contact me via the social links above.</p>');
+                        if (headingStyles) {
+                            contactHtml = contactHtml.replace(/<h2([^>]*)>/, `<h2 style="${headingStyles}" $1>`);
+                        }
+                        contentHtml = contactHtml;
+                    }
+
+                    // Wrap with style overrides if any
+                    if (style.text_color || (style.font_family && style.font_family !== 'inherit')) {
+                        contentHtml = `<div style="${sectionStyles}">${contentHtml}</div>`;
                     }
 
                     const sectionDiv = document.createElement('div');
