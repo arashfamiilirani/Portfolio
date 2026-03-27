@@ -19,6 +19,16 @@
   ],
   "modules": [
     {
+      "type": "video_block",
+      "caption": "Misophonia",
+      "url": "https://www.youtube.com/watch?v=aGUqCb4eXmM"
+    },
+    {
+      "type": "video_block",
+      "caption": "Dey",
+      "url": "https://www.youtube.com/shorts/96cjKm0XPRE"
+    },
+    {
       "type": "text_block",
       "title": "bio",
       "body": "Biography\n\nArash Famiilirani is a Montreal-based electroacoustic composer and sound artist whose work\n\nexplores the boundaries between perception, time, and minimal sonic materials. A graduate of\n\nConcordia University’s Bachelor of Fine Arts program in Electroacoustic Studies, Famiilirani’s\n\npractice draws from both experimental composition and attentive listening, transforming subtle\n\ngestures and everyday sounds into immersive auditory experiences. His recent works\n\ninvestigate psychoacoustic phenomena and the tension between structure and stillness,\n\ninviting audiences to engage with sound as a living, perceptual field."
