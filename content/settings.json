@@ -2,7 +2,9 @@
   "site_name": "ARASH FAMIILIRANI",
   "hero": {
     "image": "/assets/img/img_3547.jpeg",
-    "credit": ""
+    "credit": "",
+    "size": "full",
+    "alignment": "center"
   },
   "theme": {
     "bg": "#d9d5d5",
@@ -10,7 +12,8 @@
     "accent": "#fbf9f9",
     "heading_font": "Georgia, serif",
     "body_font": "Helvetica, sans-serif",
-    "heading_size": "4.5rem"
+    "heading_size": "4.5rem",
+    "paragraph_size": "1.2"
   },
   "social_links": {
     "instagram": "https://www.instagram.com/a.feefifofum/",
@@ -81,5 +84,12 @@
       }
     }
   ],
-  "home_label": "Home"
+  "home_label": "Home",
+  "contact_form": {
+    "endpoint": "https://formspree.io/f/xreobwzr",
+    "title": "contact"
+  },
+  "footer": {
+    "copyright": "2026@Arash Famiilirani"
+  }
 }
