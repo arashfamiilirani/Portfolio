@@ -5,27 +5,45 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes" />
   <title>Admin Portal</title>
   <style>
-    /* Improve tap targets and readability on mobile */
+    /* iOS improvements */
     @media (max-width: 768px) {
       .decap-cms-widget-list__item,
       .decap-cms-widget-object__field,
       .decap-cms-widget-string input,
       .decap-cms-widget-markdown button,
       .decap-cms-widget-select select {
-        font-size: 16px !important; /* prevent zoom on focus */
+        font-size: 16px !important;
         padding: 12px !important;
       }
-      .decap-cms-collection__card {
-        margin: 10px !important;
-      }
       button, a, [role="button"] {
-        min-height: 44px !important; /* Apple's recommended touch target */
+        min-height: 44px !important;
       }
     }
   </style>
 </head>
 <body>
   <script src="https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js"></script>
-  <!-- No extra config needed – Decap will load config.yml from the same folder -->
+  <script>
+    // Wait for Decap CMS to be ready
+    CMS.registerDashboardCard({
+      name: 'site-info',
+      label: 'Site Overview',
+      component: () => {
+        return `
+          <div style="padding: 20px; background: #f9f9f9; border-radius: 8px; margin-bottom: 20px;">
+            <h2>Welcome to the Admin Panel</h2>
+            <p>Use the left menu to edit your site.</p>
+            <hr>
+            <h3>Quick Links</h3>
+            <ul>
+              <li><a href="/" target="_blank">View Live Site</a></li>
+              <li><a href="#/collections/pages/entries/home">Edit Main Page</a></li>
+            </ul>
+            <p style="font-size: 0.8rem; margin-top: 20px;">Need help? Check the <a href="https://decapcms.org/docs/" target="_blank">Decap CMS docs</a>.</p>
+          </div>
+        `;
+      }
+    });
+  </script>
 </body>
 </html>
