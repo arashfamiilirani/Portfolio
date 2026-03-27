@@ -14,6 +14,7 @@
             --heading-font: 'Cormorant Garamond', serif;
             --body-font: 'Inter', sans-serif;
             --heading-size: 4.5rem;
+            --paragraph-size: 1.2rem;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -82,6 +83,9 @@
             margin: 0 auto;
             padding: 2rem 2rem 6rem;
         }
+        .hero {
+            text-align: var(--hero-align, center);
+        }
         .hero img {
             max-width: 100%;
             height: auto;
@@ -106,17 +110,19 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        /* Bio section */
         .bio h1 {
             font-size: var(--heading-size);
             line-height: 1.1;
             margin: 2rem 0 1rem;
         }
         .bio p {
-            font-size: 1.2rem;
+            font-size: var(--paragraph-size);
             line-height: 1.6;
             margin-bottom: 1.5rem;
             max-width: 85%;
         }
+        /* Video reel */
         .video_reel .video-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -135,6 +141,7 @@
             border: none;
             background: #f0f0f0;
         }
+        /* Audio sections */
         .music .audio-grid, .sound_design .audio-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -160,6 +167,54 @@
             opacity: 0.7;
             margin-top: 0.5rem;
         }
+        /* Contact form */
+        .contact-form {
+            margin-top: 2rem;
+        }
+        .contact-form label {
+            display: block;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 0.75rem;
+            margin-top: 0.25rem;
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 4px;
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--body-font);
+        }
+        .contact-form button {
+            margin-top: 1.5rem;
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: var(--body-font);
+            font-weight: 500;
+            transition: opacity 0.2s;
+        }
+        .contact-form button:hover {
+            opacity: 0.8;
+        }
+        .form-status {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+        /* Footer */
+        .site-footer {
+            border-top: 1px solid rgba(0,0,0,0.1);
+            padding: 2rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text);
+            opacity: 0.7;
+        }
         @media (max-width: 768px) {
             .site-header { flex-direction: column; gap: 0.5rem; text-align: center; }
             .nav-links { justify-content: center; gap: 1rem; }
@@ -177,6 +232,7 @@
         <div class="social-icons" id="social-icons"></div>
     </header>
     <main class="main-content" id="main-content"></main>
+    <footer class="site-footer" id="footer"></footer>
 
     <script>
         // Convert any YouTube watch/shorts URL to embed URL
@@ -213,6 +269,7 @@
                     if (data.theme.heading_font) root.setProperty('--heading-font', data.theme.heading_font);
                     if (data.theme.body_font) root.setProperty('--body-font', data.theme.body_font);
                     if (data.theme.heading_size) root.setProperty('--heading-size', data.theme.heading_size);
+                    if (data.theme.paragraph_size) root.setProperty('--paragraph-size', data.theme.paragraph_size);
                 }
 
                 // Site name and home label
@@ -230,11 +287,27 @@
                 if (social.email) socialLinks.push(`<a href="mailto:${social.email}"><i class="fas fa-envelope"></i></a>`);
                 socialContainer.innerHTML = socialLinks.join('');
 
+                // Footer
+                if (data.footer && data.footer.copyright) {
+                    document.getElementById('footer').innerHTML = `<p>${data.footer.copyright}</p>`;
+                } else {
+                    document.getElementById('footer').innerHTML = '<p>© 2025 Arash Famiilirani. All rights reserved.</p>';
+                }
+
                 // Hero
                 const hero = data.hero || {};
+                let heroStyle = '';
+                if (hero.size === 'contain') {
+                    heroStyle = 'max-width: 100%; height: auto; margin: 0 auto;';
+                } else if (hero.size === 'custom' && hero.width) {
+                    heroStyle = `width: ${hero.width}; height: auto; margin: 0 auto;`;
+                } else {
+                    heroStyle = 'width: 100%; height: auto;';
+                }
+                const heroAlign = hero.alignment || 'center';
                 const heroHtml = `
-                    <div class="hero" id="hero-section">
-                        ${hero.image ? `<img src="${hero.image}" alt="Hero">` : ''}
+                    <div class="hero" style="text-align: ${heroAlign};">
+                        ${hero.image ? `<img src="${hero.image}" alt="Hero" style="${heroStyle}">` : ''}
                         ${hero.credit ? `<div class="credit">${hero.credit}</div>` : ''}
                     </div>
                 `;
@@ -252,13 +325,13 @@
                     let title = section.title || 'Untitled';
                     const style = section.style || {};
 
-                    // Build inline styles for the section
-                    let sectionStyles = '';
-                    if (style.text_color) sectionStyles += `color: ${style.text_color}; `;
-                    if (style.font_family && style.font_family !== 'inherit') sectionStyles += `font-family: ${style.font_family}; `;
-                    if (sectionStyles) contentHtml = `<div style="${sectionStyles}">` + (contentHtml) + `</div>`;
+                    // Build wrapper styles
+                    let wrapperStyles = '';
+                    if (style.text_color) wrapperStyles += `color: ${style.text_color}; `;
+                    if (style.font_family && style.font_family !== 'inherit') wrapperStyles += `font-family: ${style.font_family}; `;
+                    if (style.text_size) wrapperStyles += `font-size: ${style.text_size}; `;
 
-                    // Build heading override styles (will be applied via a <style> block later)
+                    // Build heading override styles
                     let headingStyles = '';
                     if (style.heading_color) headingStyles += `color: ${style.heading_color}; `;
                     if (style.heading_size) headingStyles += `font-size: ${style.heading_size}; `;
@@ -266,7 +339,6 @@
                     if (section.type === 'bio') {
                         let bodyHtml = marked.parse(section.body || '');
                         if (headingStyles) {
-                            // Wrap in a temporary div to apply heading styles
                             bodyHtml = bodyHtml.replace(/<h1([^>]*)>/, `<h1 style="${headingStyles}" $1>`);
                             bodyHtml = bodyHtml.replace(/<h2([^>]*)>/, `<h2 style="${headingStyles}" $1>`);
                         }
@@ -318,16 +390,60 @@
                         `;
                     }
                     else if (section.type === 'contact') {
-                        let contactHtml = marked.parse(section.text || '<p>Contact me via the social links above.</p>');
-                        if (headingStyles) {
-                            contactHtml = contactHtml.replace(/<h2([^>]*)>/, `<h2 style="${headingStyles}" $1>`);
+                        // Display the contact form (if endpoint exists)
+                        const formEndpoint = data.contact_form?.endpoint || '';
+                        const formTitle = data.contact_form?.title || 'Send a Message';
+                        let contactHtml = section.text ? marked.parse(section.text) : '';
+                        if (formEndpoint) {
+                            contactHtml += `
+                                <div class="contact-form">
+                                    <h3>${formTitle}</h3>
+                                    <form id="contact-form" action="${formEndpoint}" method="POST">
+                                        <label>Name</label>
+                                        <input type="text" name="name" required>
+                                        <label>Email</label>
+                                        <input type="email" name="_replyto" required>
+                                        <label>Message</label>
+                                        <textarea name="message" rows="5" required></textarea>
+                                        <button type="submit">Send</button>
+                                        <div class="form-status" id="form-status"></div>
+                                    </form>
+                                </div>
+                                <script>
+                                    const form = document.getElementById('contact-form');
+                                    const status = document.getElementById('form-status');
+                                    if (form) {
+                                        form.addEventListener('submit', async (e) => {
+                                            e.preventDefault();
+                                            const formData = new FormData(form);
+                                            try {
+                                                const response = await fetch(form.action, {
+                                                    method: 'POST',
+                                                    body: formData,
+                                                    headers: { 'Accept': 'application/json' }
+                                                });
+                                                if (response.ok) {
+                                                    status.innerHTML = '<p style="color: green;">Message sent! Thank you.</p>';
+                                                    form.reset();
+                                                } else {
+                                                    status.innerHTML = '<p style="color: red;">Oops! Something went wrong.</p>';
+                                                }
+                                            } catch (err) {
+                                                status.innerHTML = '<p style="color: red;">Network error. Please try again.</p>';
+                                            }
+                                        });
+                                    }
+                                <\/script>
+                            `;
+                        } else {
+                            contactHtml += '<p>Contact form not configured. Please add a Formspree endpoint in the CMS.</p>';
                         }
                         contentHtml = contactHtml;
                     }
 
-                    // Wrap with style overrides if any
-                    if (style.text_color || (style.font_family && style.font_family !== 'inherit')) {
-                        contentHtml = `<div style="${sectionStyles}">${contentHtml}</div>`;
+                    // Apply wrapper styles if any
+                    if (wrapperStyles) {
+                        contentHtml = `<div style="${wrapperStyles}">${contentHtml}</div>`;
                     }
 
                     const sectionDiv = document.createElement('div');
