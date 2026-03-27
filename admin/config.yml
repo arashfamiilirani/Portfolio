@@ -21,7 +21,7 @@ collections:
         fields:
           - { label: "Site Name (Logo)", name: "site_name", widget: "string", hint: "Appears in header" }
 
-          # ----- HERO IMAGE (Homepage Background) -----
+          # ----- HERO IMAGE -----
           - label: "Hero Image (Homepage Background)"
             name: "hero"
             widget: "object"
@@ -38,21 +38,9 @@ collections:
             fields:
               - { label: "Background Color", name: "bg", widget: "color", default: "#ffffff" }
               - { label: "Text Color", name: "text", widget: "color", default: "#111111" }
-              - { label: "Accent Color (hover links)", name: "accent", widget: "color", default: "#000000" }
-              - { 
-                  label: "Heading Font", 
-                  name: "heading_font", 
-                  widget: "select", 
-                  options: ["Cormorant Garamond, serif", "Georgia, serif", "Playfair Display, serif"], 
-                  default: "Cormorant Garamond, serif" 
-                }
-              - { 
-                  label: "Body Font", 
-                  name: "body_font", 
-                  widget: "select", 
-                  options: ["Inter, sans-serif", "Helvetica, sans-serif", "Open Sans, sans-serif"], 
-                  default: "Inter, sans-serif" 
-                }
+              - { label: "Accent Color", name: "accent", widget: "color", default: "#000000" }
+              - { label: "Heading Font", name: "heading_font", widget: "select", options: ["Cormorant Garamond, serif", "Georgia, serif", "Playfair Display, serif"], default: "Cormorant Garamond, serif" }
+              - { label: "Body Font", name: "body_font", widget: "select", options: ["Inter, sans-serif", "Helvetica, sans-serif", "Open Sans, sans-serif"], default: "Inter, sans-serif" }
               - { label: "Heading Size (e.g., 4.5rem)", name: "heading_size", widget: "string", default: "4.5rem" }
 
           # ----- SOCIAL LINKS -----
@@ -67,7 +55,7 @@ collections:
               - { label: "Spotify URL", name: "spotify", widget: "string", required: false }
               - { label: "Email", name: "email", widget: "string", required: false }
 
-          # ----- PAGE SECTIONS (tabs) -----
+          # ----- PAGE SECTIONS (TABS) -----
           - label: "Page Sections (tabs)"
             name: "sections"
             widget: "list"
@@ -78,36 +66,43 @@ collections:
                 fields:
                   - { label: "Section Title", name: "title", widget: "string", default: "Bio / CV", required: true }
                   - { label: "Content", name: "body", widget: "markdown", default_view: "visual" }
+
               - label: "Video Reel"
                 name: "video_reel"
                 fields:
                   - { label: "Section Title", name: "title", widget: "string", default: "Video Reels", required: true }
+                  - { label: "Layout", name: "layout", widget: "select", options: ["grid", "list"], default: "grid", hint: "How videos are arranged" }
                   - label: "Videos"
                     name: "videos"
                     widget: "list"
                     fields:
-                      - { label: "Video URL (YouTube/Vimeo embed)", name: "url", widget: "string" }
+                      - { label: "Video Embed URL", name: "url", widget: "string", hint: "Use embed URL (e.g., https://www.youtube.com/embed/...)" }
                       - { label: "Caption", name: "caption", widget: "string", required: false }
+
               - label: "Music"
                 name: "music"
                 fields:
                   - { label: "Section Title", name: "title", widget: "string", default: "Music", required: true }
+                  - { label: "Layout", name: "layout", widget: "select", options: ["grid", "list"], default: "list", hint: "Grid shows multiple tracks side by side (not recommended for audio)" }
                   - label: "Tracks"
                     name: "tracks"
                     widget: "list"
                     fields:
                       - { label: "Embed URL (SoundCloud/Spotify)", name: "url", widget: "string" }
                       - { label: "Details", name: "caption", widget: "string", required: false }
+
               - label: "Sound Design"
                 name: "sound_design"
                 fields:
                   - { label: "Section Title", name: "title", widget: "string", default: "Sound Design", required: true }
+                  - { label: "Layout", name: "layout", widget: "select", options: ["grid", "list"], default: "list" }
                   - label: "Sound Pieces"
                     name: "tracks"
                     widget: "list"
                     fields:
                       - { label: "Embed URL", name: "url", widget: "string" }
                       - { label: "Details", name: "caption", widget: "string", required: false }
+
               - label: "Contact"
                 name: "contact"
                 fields:
