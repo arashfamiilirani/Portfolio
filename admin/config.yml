@@ -20,6 +20,7 @@ collections:
         file: "content/settings.json"
         fields:
           - { label: "Site Name (Logo)", name: "site_name", widget: "string", hint: "Appears in header" }
+          - { label: "Home Button Label", name: "home_label", widget: "string", default: "Home", hint: "Text for the first tab" }
 
           # ----- HERO IMAGE -----
           - label: "Hero Image (Homepage Background)"
@@ -71,19 +72,19 @@ collections:
                 name: "video_reel"
                 fields:
                   - { label: "Section Title", name: "title", widget: "string", default: "Video Reels", required: true }
-                  - { label: "Layout", name: "layout", widget: "select", options: ["grid", "list"], default: "grid", hint: "How videos are arranged" }
+                  - { label: "Layout", name: "layout", widget: "select", options: ["grid", "list"], default: "grid" }
                   - label: "Videos"
                     name: "videos"
                     widget: "list"
                     fields:
-                      - { label: "Video Embed URL", name: "url", widget: "string", hint: "Use embed URL (e.g., https://www.youtube.com/embed/...)" }
+                      - { label: "Video Embed URL", name: "url", widget: "string", hint: "Use YouTube/Vimeo embed URL" }
                       - { label: "Caption", name: "caption", widget: "string", required: false }
 
               - label: "Music"
                 name: "music"
                 fields:
                   - { label: "Section Title", name: "title", widget: "string", default: "Music", required: true }
-                  - { label: "Layout", name: "layout", widget: "select", options: ["grid", "list"], default: "list", hint: "Grid shows multiple tracks side by side (not recommended for audio)" }
+                  - { label: "Layout", name: "layout", widget: "select", options: ["grid", "list"], default: "list" }
                   - label: "Tracks"
                     name: "tracks"
                     widget: "list"
