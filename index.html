@@ -81,10 +81,10 @@
         .main-content {
             max-width: 1000px;
             margin: 0 auto;
-            padding: 2rem 2rem 6rem;
+            padding: 2rem 2rem 4rem;
         }
         .hero {
-            text-align: var(--hero-align, center);
+            text-align: center;
         }
         .hero img {
             max-width: 100%;
@@ -164,8 +164,14 @@
             opacity: 0.7;
             margin-top: 0.5rem;
         }
+        /* Contact form - always visible at bottom */
+        .contact-section {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0,0,0,0.1);
+        }
         .contact-form {
-            margin-top: 2rem;
+            margin-top: 1rem;
         }
         .contact-form label {
             display: block;
@@ -289,15 +295,11 @@
 
                 // Hero image
                 const hero = data.hero || {};
-                let heroStyle = '';
-                // Ensure image displays regardless of size settings
+                let heroStyle = 'width: 100%; height: auto;';
                 if (hero.size === 'contain') {
                     heroStyle = 'max-width: 100%; height: auto; margin: 0 auto;';
                 } else if (hero.size === 'custom' && hero.width) {
                     heroStyle = `width: ${hero.width}; height: auto; margin: 0 auto;`;
-                } else {
-                    // Default: full width
-                    heroStyle = 'width: 100%; height: auto;';
                 }
                 const heroAlign = hero.alignment || 'center';
                 const heroHtml = `
@@ -320,13 +322,13 @@
                     let title = section.title || 'Untitled';
                     const style = section.style || {};
 
-                    // Build wrapper styles
+                    // Wrapper styles
                     let wrapperStyles = '';
                     if (style.text_color) wrapperStyles += `color: ${style.text_color}; `;
                     if (style.font_family && style.font_family !== 'inherit') wrapperStyles += `font-family: ${style.font_family}; `;
                     if (style.text_size) wrapperStyles += `font-size: ${style.text_size}; `;
 
-                    // Build heading override styles
+                    // Heading styles
                     let headingStyles = '';
                     if (style.heading_color) headingStyles += `color: ${style.heading_color}; `;
                     if (style.heading_size) headingStyles += `font-size: ${style.heading_size}; `;
@@ -384,60 +386,8 @@
                             </div>
                         `;
                     }
-                    else if (section.type === 'contact') {
-                        // Hardcoded Formspree endpoint
-                        const formEndpoint = 'https://formspree.io/f/xreobwzr';
-                        const formTitle = data.contact_form?.title || 'Send a Message';
-                        let contactHtml = section.text ? marked.parse(section.text) : '';
-                        contactHtml += `
-                            <div class="contact-form">
-                                <h3>${formTitle}</h3>
-                                <form id="contact-form-${idx}" action="${formEndpoint}" method="POST">
-                                    <label>Name</label>
-                                    <input type="text" name="name" required>
-                                    <label>Email</label>
-                                    <input type="email" name="_replyto" required>
-                                    <label>Message</label>
-                                    <textarea name="message" rows="5" required></textarea>
-                                    <button type="submit">Send</button>
-                                    <div class="form-status" id="form-status-${idx}"></div>
-                                </form>
-                            </div>
-                            <script>
-                                (function() {
-                                    const form = document.getElementById('contact-form-${idx}');
-                                    const status = document.getElementById('form-status-${idx}');
-                                    if (form) {
-                                        form.addEventListener('submit', async (e) => {
-                                            e.preventDefault();
-                                            const formData = new FormData(form);
-                                            try {
-                                                const response = await fetch(form.action, {
-                                                    method: 'POST',
-                                                    body: formData,
-                                                    headers: { 'Accept': 'application/json' }
-                                                });
-                                                if (response.ok) {
-                                                    status.innerHTML = '<p style="color: green;">Message sent! Thank you.</p>';
-                                                    form.reset();
-                                                } else {
-                                                    status.innerHTML = '<p style="color: red;">Oops! Something went wrong.</p>';
-                                                }
-                                            } catch (err) {
-                                                status.innerHTML = '<p style="color: red;">Network error. Please try again.</p>';
-                                            }
-                                        });
-                                    }
-                                })();
-                            <\/script>
-                        `;
-                        contentHtml = contactHtml;
-                    }
 
-                    // Apply wrapper styles if any
-                    if (wrapperStyles) {
-                        contentHtml = `<div style="${wrapperStyles}">${contentHtml}</div>`;
-                    }
+                    if (wrapperStyles) contentHtml = `<div style="${wrapperStyles}">${contentHtml}</div>`;
 
                     const sectionDiv = document.createElement('div');
                     sectionDiv.id = sectionId;
@@ -447,7 +397,54 @@
                     sectionsData.push({ id: sectionId, title: title });
                 });
 
-                // Navigation (Home button with custom label)
+                // Always add the contact form at the end (hardcoded endpoint)
+                const contactHtml = `
+                    <div class="contact-section">
+                        <h2>Contact</h2>
+                        <div class="contact-form">
+                            <form id="contact-form" action="https://formspree.io/f/xreobwzr" method="POST">
+                                <label>Name</label>
+                                <input type="text" name="name" required>
+                                <label>Email</label>
+                                <input type="email" name="_replyto" required>
+                                <label>Message</label>
+                                <textarea name="message" rows="5" required></textarea>
+                                <button type="submit">Send</button>
+                                <div class="form-status" id="form-status"></div>
+                            </form>
+                        </div>
+                    </div>
+                `;
+                const contactDiv = document.createElement('div');
+                contactDiv.innerHTML = contactHtml;
+                mainContainer.appendChild(contactDiv);
+
+                // Handle form submission
+                const form = document.getElementById('contact-form');
+                const statusDiv = document.getElementById('form-status');
+                if (form) {
+                    form.addEventListener('submit', async (e) => {
+                        e.preventDefault();
+                        const formData = new FormData(form);
+                        try {
+                            const response = await fetch(form.action, {
+                                method: 'POST',
+                                body: formData,
+                                headers: { 'Accept': 'application/json' }
+                            });
+                            if (response.ok) {
+                                statusDiv.innerHTML = '<p style="color: green;">Message sent! Thank you.</p>';
+                                form.reset();
+                            } else {
+                                statusDiv.innerHTML = '<p style="color: red;">Oops! Something went wrong.</p>';
+                            }
+                        } catch (err) {
+                            statusDiv.innerHTML = '<p style="color: red;">Network error. Please try again.</p>';
+                        }
+                    });
+                }
+
+                // Navigation (Home button + section tabs)
                 const navContainer = document.getElementById('nav-links');
                 navContainer.innerHTML = `<a data-section="hero">${homeLabel}</a>` + 
                     sectionsData.map(item => `<a data-section="${item.id}">${item.title}</a>`).join('');
