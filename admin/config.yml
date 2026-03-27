@@ -13,75 +13,39 @@ editor:
 
 collections:
   - name: "pages"
-    label: "Site Builder (Drag & Drop)"
+    label: "Site Builder"
     files:
       - name: "home"
         label: "Main Page"
         file: "content/settings.json"
         fields:
-          - { label: "Site Name (Logo)", name: "site_name", widget: "string", hint: "Appears in header" }
-          - { label: "Home Button Label", name: "home_label", widget: "string", default: "Home", hint: "Text for the first tab" }
+          - { label: "Site Name (Logo)", name: "site_name", widget: "string", default: "ARASH FAMIILIRANI" }
+          - { label: "Home Button Label", name: "home_label", widget: "string", default: "Home" }
 
-          # ----- HERO IMAGE (with size & alignment) -----
+          # Hero image
           - label: "Hero Image"
             name: "hero"
             widget: "object"
-            collapsed: false
             fields:
               - { label: "Image", name: "image", widget: "image" }
               - { label: "Credit (optional)", name: "credit", widget: "string", required: false }
-              - { label: "Image Size", name: "size", widget: "select", options: ["full", "contain", "custom"], default: "full", hint: "full = fill width, contain = fit within max width, custom = set width" }
-              - { label: "Custom Width (px or %)", name: "width", widget: "string", required: false, hint: "e.g., 800px or 80%" }
-              - { label: "Alignment", name: "alignment", widget: "select", options: ["center", "left", "right"], default: "center" }
 
-          # ----- GLOBAL THEME SETTINGS -----
-          - label: "Global Theme Settings"
+          # Theme
+          - label: "Theme"
             name: "theme"
             widget: "object"
-            collapsed: false
             fields:
               - { label: "Background Color", name: "bg", widget: "color", default: "#ffffff" }
               - { label: "Text Color", name: "text", widget: "color", default: "#111111" }
-              - { label: "Accent Color (hover links)", name: "accent", widget: "color", default: "#000000" }
-              - { 
-                  label: "Global Heading Font", 
-                  name: "heading_font", 
-                  widget: "select", 
-                  options: [
-                    "Cormorant Garamond, serif",
-                    "Georgia, serif",
-                    "Playfair Display, serif",
-                    "Times New Roman, serif",
-                    "Merriweather, serif",
-                    "Montserrat, sans-serif",
-                    "Poppins, sans-serif",
-                    "Roboto, sans-serif",
-                    "Open Sans, sans-serif"
-                  ], 
-                  default: "Cormorant Garamond, serif" 
-                }
-              - { 
-                  label: "Global Body Font", 
-                  name: "body_font", 
-                  widget: "select", 
-                  options: [
-                    "Inter, sans-serif",
-                    "Helvetica, sans-serif",
-                    "Open Sans, sans-serif",
-                    "Roboto, sans-serif",
-                    "Lato, sans-serif",
-                    "Montserrat, sans-serif"
-                  ], 
-                  default: "Inter, sans-serif" 
-                }
-              - { label: "Global Heading Size (e.g., 4.5rem)", name: "heading_size", widget: "string", default: "4.5rem" }
-              - { label: "Global Paragraph Size (e.g., 1.2rem)", name: "paragraph_size", widget: "string", default: "1.2rem" }
+              - { label: "Accent Color", name: "accent", widget: "color", default: "#000000" }
+              - { label: "Heading Font", name: "heading_font", widget: "select", options: ["Cormorant Garamond, serif", "Georgia, serif", "Playfair Display, serif", "Inter, sans-serif"], default: "Cormorant Garamond, serif" }
+              - { label: "Body Font", name: "body_font", widget: "select", options: ["Inter, sans-serif", "Helvetica, sans-serif", "Open Sans, sans-serif"], default: "Inter, sans-serif" }
+              - { label: "Heading Size (e.g., 4.5rem)", name: "heading_size", widget: "string", default: "4.5rem" }
 
-          # ----- SOCIAL LINKS -----
-          - label: "Social Links (header icons)"
+          # Social links (these appear in header)
+          - label: "Social Links"
             name: "social_links"
             widget: "object"
-            collapsed: false
             fields:
               - { label: "Instagram URL", name: "instagram", widget: "string", required: false }
               - { label: "YouTube URL", name: "youtube", widget: "string", required: false }
@@ -89,25 +53,8 @@ collections:
               - { label: "Spotify URL", name: "spotify", widget: "string", required: false }
               - { label: "Email", name: "email", widget: "string", required: false }
 
-          # ----- CONTACT FORM (Formspree) -----
-          - label: "Contact Form Settings"
-            name: "contact_form"
-            widget: "object"
-            collapsed: false
-            fields:
-              - { label: "Formspree Endpoint URL", name: "endpoint", widget: "string", required: true, hint: "Get one from https://formspree.io" }
-              - { label: "Form Title (optional)", name: "title", widget: "string", default: "Send a Message" }
-
-          # ----- FOOTER -----
-          - label: "Footer"
-            name: "footer"
-            widget: "object"
-            collapsed: false
-            fields:
-              - { label: "Copyright Text", name: "copyright", widget: "string", default: "© 2025 Arash Famiilirani. All rights reserved." }
-
-          # ----- PAGE SECTIONS (with per‑section text size) -----
-          - label: "Page Sections (tabs)"
+          # Page sections (tabs)
+          - label: "Sections (tabs)"
             name: "sections"
             widget: "list"
             summary: '{{fields.title}} ({{fields.type}})'
@@ -115,97 +62,38 @@ collections:
               - label: "Bio / CV"
                 name: "bio"
                 fields:
-                  - { label: "Section Title", name: "title", widget: "string", default: "Bio / CV", required: true }
+                  - { label: "Tab Title", name: "title", widget: "string", default: "Bio / CV" }
                   - { label: "Content", name: "body", widget: "markdown", default_view: "visual" }
-                  - label: "Section Style Overrides (optional)"
-                    name: "style"
-                    widget: "object"
-                    collapsed: true
-                    fields:
-                      - { label: "Heading Color", name: "heading_color", widget: "color", required: false }
-                      - { label: "Text Color", name: "text_color", widget: "color", required: false }
-                      - { label: "Font Family", name: "font_family", widget: "select", options: ["inherit", "Cormorant Garamond, serif", "Georgia, serif", "Playfair Display, serif", "Inter, sans-serif", "Open Sans, sans-serif", "Roboto, sans-serif"], default: "inherit" }
-                      - { label: "Heading Size (e.g., 3rem)", name: "heading_size", widget: "string", required: false }
-                      - { label: "Paragraph Size (e.g., 1rem)", name: "text_size", widget: "string", required: false }
 
               - label: "Video Reel"
                 name: "video_reel"
                 fields:
-                  - { label: "Section Title", name: "title", widget: "string", default: "Video Reels", required: true }
-                  - { label: "Layout", name: "layout", widget: "select", options: ["grid", "list"], default: "grid" }
+                  - { label: "Tab Title", name: "title", widget: "string", default: "Video Reels" }
                   - label: "Videos"
                     name: "videos"
                     widget: "list"
                     fields:
-                      - { label: "Video Embed URL", name: "url", widget: "string", hint: "Use YouTube/Vimeo embed URL" }
+                      - { label: "Embed URL (YouTube/Vimeo)", name: "url", widget: "string" }
                       - { label: "Caption", name: "caption", widget: "string", required: false }
-                  - label: "Section Style Overrides (optional)"
-                    name: "style"
-                    widget: "object"
-                    collapsed: true
-                    fields:
-                      - { label: "Heading Color", name: "heading_color", widget: "color", required: false }
-                      - { label: "Text Color", name: "text_color", widget: "color", required: false }
-                      - { label: "Font Family", name: "font_family", widget: "select", options: ["inherit", "Cormorant Garamond, serif", "Georgia, serif", "Playfair Display, serif", "Inter, sans-serif", "Open Sans, sans-serif", "Roboto, sans-serif"], default: "inherit" }
-                      - { label: "Heading Size (e.g., 3rem)", name: "heading_size", widget: "string", required: false }
-                      - { label: "Paragraph Size (e.g., 1rem)", name: "text_size", widget: "string", required: false }
 
               - label: "Music"
                 name: "music"
                 fields:
-                  - { label: "Section Title", name: "title", widget: "string", default: "Music", required: true }
-                  - { label: "Layout", name: "layout", widget: "select", options: ["grid", "list"], default: "list" }
+                  - { label: "Tab Title", name: "title", widget: "string", default: "Music" }
                   - label: "Tracks"
                     name: "tracks"
                     widget: "list"
                     fields:
                       - { label: "Embed URL (SoundCloud/Spotify)", name: "url", widget: "string" }
                       - { label: "Details", name: "caption", widget: "string", required: false }
-                  - label: "Section Style Overrides (optional)"
-                    name: "style"
-                    widget: "object"
-                    collapsed: true
-                    fields:
-                      - { label: "Heading Color", name: "heading_color", widget: "color", required: false }
-                      - { label: "Text Color", name: "text_color", widget: "color", required: false }
-                      - { label: "Font Family", name: "font_family", widget: "select", options: ["inherit", "Cormorant Garamond, serif", "Georgia, serif", "Playfair Display, serif", "Inter, sans-serif", "Open Sans, sans-serif", "Roboto, sans-serif"], default: "inherit" }
-                      - { label: "Heading Size (e.g., 3rem)", name: "heading_size", widget: "string", required: false }
-                      - { label: "Paragraph Size (e.g., 1rem)", name: "text_size", widget: "string", required: false }
 
               - label: "Sound Design"
                 name: "sound_design"
                 fields:
-                  - { label: "Section Title", name: "title", widget: "string", default: "Sound Design", required: true }
-                  - { label: "Layout", name: "layout", widget: "select", options: ["grid", "list"], default: "list" }
-                  - label: "Sound Pieces"
+                  - { label: "Tab Title", name: "title", widget: "string", default: "Sound Design" }
+                  - label: "Tracks"
                     name: "tracks"
                     widget: "list"
                     fields:
                       - { label: "Embed URL", name: "url", widget: "string" }
                       - { label: "Details", name: "caption", widget: "string", required: false }
-                  - label: "Section Style Overrides (optional)"
-                    name: "style"
-                    widget: "object"
-                    collapsed: true
-                    fields:
-                      - { label: "Heading Color", name: "heading_color", widget: "color", required: false }
-                      - { label: "Text Color", name: "text_color", widget: "color", required: false }
-                      - { label: "Font Family", name: "font_family", widget: "select", options: ["inherit", "Cormorant Garamond, serif", "Georgia, serif", "Playfair Display, serif", "Inter, sans-serif", "Open Sans, sans-serif", "Roboto, sans-serif"], default: "inherit" }
-                      - { label: "Heading Size (e.g., 3rem)", name: "heading_size", widget: "string", required: false }
-                      - { label: "Paragraph Size (e.g., 1rem)", name: "text_size", widget: "string", required: false }
-
-              - label: "Contact"
-                name: "contact"
-                fields:
-                  - { label: "Section Title", name: "title", widget: "string", default: "Contact", required: true }
-                  - { label: "Contact Text (above form)", name: "text", widget: "markdown", required: false }
-                  - label: "Section Style Overrides (optional)"
-                    name: "style"
-                    widget: "object"
-                    collapsed: true
-                    fields:
-                      - { label: "Heading Color", name: "heading_color", widget: "color", required: false }
-                      - { label: "Text Color", name: "text_color", widget: "color", required: false }
-                      - { label: "Font Family", name: "font_family", widget: "select", options: ["inherit", "Cormorant Garamond, serif", "Georgia, serif", "Playfair Display, serif", "Inter, sans-serif", "Open Sans, sans-serif", "Roboto, sans-serif"], default: "inherit" }
-                      - { label: "Heading Size (e.g., 3rem)", name: "heading_size", widget: "string", required: false }
-                      - { label: "Paragraph Size (e.g., 1rem)", name: "text_size", widget: "string", required: false }
