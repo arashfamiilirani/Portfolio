@@ -5,7 +5,7 @@
     "credit": "",
     "width": "75%",
     "height": "100vh",
-    "fit": "cover",
+    "fit": "scale-down",
     "alignment": "center"
   },
   "theme": {
