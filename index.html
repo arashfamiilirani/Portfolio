@@ -7,7 +7,6 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style id="theme-styles">
-        /* Default theme – overridden by JS */
         :root {
             --bg: #ffffff;
             --text: #111111;
@@ -24,6 +23,7 @@
             font-weight: 300;
             line-height: 1.5;
         }
+        /* Header */
         .site-header {
             position: sticky;
             top: 0;
@@ -58,6 +58,7 @@
             letter-spacing: 0.05em;
             color: var(--text);
             text-decoration: none;
+            cursor: pointer;
             transition: color 0.2s;
         }
         .nav-links a:hover {
@@ -76,19 +77,39 @@
         .social-icons a:hover {
             color: var(--accent);
         }
-        .container {
+        /* Main content */
+        .main-content {
             max-width: 1000px;
             margin: 0 auto;
             padding: 2rem 2rem 6rem;
         }
+        /* Hero */
+        .hero img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+        .hero .credit {
+            font-size: 0.75rem;
+            color: var(--text);
+            opacity: 0.6;
+            margin-top: 0.5rem;
+            text-align: center;
+        }
+        /* Sections (hidden by default) */
         .section {
-            margin-bottom: 6rem;
-            scroll-margin-top: 100px;
+            display: none;
+            animation: fadeIn 0.3s ease;
         }
-        /* Bio section */
-        .bio h1, .bio h2, .bio h3 {
-            font-family: var(--heading-font);
+        .section.active {
+            display: block;
         }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Bio */
         .bio h1 {
             font-size: var(--heading-size);
             line-height: 1.1;
@@ -100,48 +121,42 @@
             margin-bottom: 1.5rem;
             max-width: 85%;
         }
-        /* Video reel grid */
+        /* Video reel: grid vs list */
         .video_reel .video-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 2rem;
             margin-top: 1.5rem;
         }
-        .video_reel .video-item {
-            background: #f9f9f9;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-        .video_reel iframe {
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            border: none;
-        }
-        .video_reel .caption {
-            padding: 0.5rem;
-            font-size: 0.8rem;
-            color: #666;
-            text-align: center;
-        }
-        /* Audio sections (music, sound design) */
-        .music .audio-grid, .sound_design .audio-grid {
+        .video_reel .video-list {
             display: flex;
             flex-direction: column;
             gap: 2rem;
             margin-top: 1.5rem;
         }
-        .music .audio-item, .sound_design .audio-item {
+        .video-item iframe {
             width: 100%;
+            aspect-ratio: 16 / 9;
+            border: none;
+            background: #f0f0f0;
         }
-        .music iframe, .sound_design iframe {
+        /* Audio sections */
+        .music .audio-grid, .sound_design .audio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+        .music .audio-list, .sound_design .audio-list {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+        .audio-item iframe {
             width: 100%;
             height: 166px;
             border: none;
-        }
-        /* Contact section */
-        .contact p {
-            font-size: 1.2rem;
-            line-height: 1.6;
         }
         .caption {
             font-size: 0.75rem;
@@ -157,7 +172,7 @@
             .social-icons { margin-left: 0; justify-content: center; }
             .bio p { max-width: 100%; }
             .bio h1 { font-size: calc(var(--heading-size) * 0.7); }
-            .video-grid { grid-template-columns: 1fr; }
+            .video-grid, .audio-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -167,7 +182,7 @@
         <div class="nav-links" id="nav-links"></div>
         <div class="social-icons" id="social-icons"></div>
     </header>
-    <main class="container" id="content-sections"></main>
+    <main class="main-content" id="main-content"></main>
 
     <script>
         async function buildSite() {
@@ -187,6 +202,7 @@
                     if (data.theme.heading_size) root.setProperty('--heading-size', data.theme.heading_size);
                 }
 
+                // Site name
                 document.getElementById('logo-text').textContent = data.site_name || 'ARASH FAMIILIRANI';
 
                 // Social icons
@@ -200,29 +216,36 @@
                 if (social.email) socialLinks.push(`<a href="mailto:${social.email}"><i class="fas fa-envelope"></i></a>`);
                 socialContainer.innerHTML = socialLinks.join('');
 
-                // Sections
+                // Hero
+                const hero = data.hero || {};
+                const heroHtml = `
+                    <div class="hero" id="hero-section">
+                        ${hero.image ? `<img src="${hero.image}" alt="Hero">` : ''}
+                        ${hero.credit ? `<div class="credit">${hero.credit}</div>` : ''}
+                    </div>
+                `;
+
+                // Build sections
                 const sections = data.sections || [];
-                const container = document.getElementById('content-sections');
-                container.innerHTML = '';
-                const navItems = [];
+                const mainContainer = document.getElementById('main-content');
+                mainContainer.innerHTML = heroHtml;
+
+                const sectionsData = [];
 
                 sections.forEach((section, idx) => {
-                    const sectionDiv = document.createElement('section');
-                    const anchorId = `section-${idx}`;
-                    sectionDiv.id = anchorId;
-                    sectionDiv.className = `section ${section.type}`;
-
-                    let navTitle = section.title || 'Untitled';
+                    const sectionId = `section-${idx}`;
                     let contentHtml = '';
+                    let title = section.title || 'Untitled';
 
                     if (section.type === 'bio') {
                         contentHtml = marked.parse(section.body || '');
                     } 
                     else if (section.type === 'video_reel') {
                         const videos = section.videos || [];
+                        const layout = section.layout === 'grid' ? 'video-grid' : 'video-list';
                         contentHtml = `
                             <h2 class="section-title">${section.title}</h2>
-                            <div class="video-grid">
+                            <div class="${layout}">
                                 ${videos.map(v => `
                                     <div class="video-item">
                                         <iframe src="${v.url}" frameborder="0" allowfullscreen></iframe>
@@ -234,9 +257,10 @@
                     }
                     else if (section.type === 'music') {
                         const tracks = section.tracks || [];
+                        const layout = section.layout === 'grid' ? 'audio-grid' : 'audio-list';
                         contentHtml = `
                             <h2 class="section-title">${section.title}</h2>
-                            <div class="audio-grid">
+                            <div class="${layout}">
                                 ${tracks.map(t => `
                                     <div class="audio-item">
                                         <iframe src="${t.url}" frameborder="0" scrolling="no"></iframe>
@@ -248,9 +272,10 @@
                     }
                     else if (section.type === 'sound_design') {
                         const tracks = section.tracks || [];
+                        const layout = section.layout === 'grid' ? 'audio-grid' : 'audio-list';
                         contentHtml = `
                             <h2 class="section-title">${section.title}</h2>
-                            <div class="audio-grid">
+                            <div class="${layout}">
                                 ${tracks.map(t => `
                                     <div class="audio-item">
                                         <iframe src="${t.url}" frameborder="0" scrolling="no"></iframe>
@@ -267,31 +292,44 @@
                         `;
                     }
 
+                    const sectionDiv = document.createElement('div');
+                    sectionDiv.id = sectionId;
+                    sectionDiv.className = `section ${section.type}`;
                     sectionDiv.innerHTML = contentHtml;
-                    container.appendChild(sectionDiv);
-                    navItems.push({ label: navTitle, id: anchorId });
+                    mainContainer.appendChild(sectionDiv);
+                    sectionsData.push({ id: sectionId, title: title });
                 });
 
-                // Build navigation
+                // Navigation
                 const navContainer = document.getElementById('nav-links');
-                navContainer.innerHTML = navItems.map(item => 
-                    `<a href="#${item.id}">${item.label}</a>`
-                ).join('');
+                navContainer.innerHTML = `<a data-section="hero">Home</a>` + 
+                    sectionsData.map(item => `<a data-section="${item.id}">${item.title}</a>`).join('');
 
-                // Smooth scroll
+                // Click handlers
                 document.querySelectorAll('.nav-links a').forEach(link => {
                     link.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        const targetId = link.getAttribute('href').substring(1);
-                        const target = document.getElementById(targetId);
-                        if (target) {
-                            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        const targetId = link.getAttribute('data-section');
+                        const hero = document.getElementById('hero-section');
+                        const sections = document.querySelectorAll('.section');
+                        if (targetId === 'hero') {
+                            hero.style.display = 'block';
+                            sections.forEach(s => s.classList.remove('active'));
+                        } else {
+                            hero.style.display = 'none';
+                            sections.forEach(s => s.classList.remove('active'));
+                            const activeSection = document.getElementById(targetId);
+                            if (activeSection) activeSection.classList.add('active');
                         }
                     });
                 });
+
+                // Initial state: show hero
+                document.getElementById('hero-section').style.display = 'block';
+                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+
             } catch (err) {
                 console.warn('Awaiting CMS publish…', err);
-                document.getElementById('content-sections').innerHTML = '<p style="color: #888;">Content will appear after you publish from the admin panel.</p>';
+                document.getElementById('main-content').innerHTML = '<p style="color: #888;">Content will appear after you publish from the admin panel.</p>';
             }
         }
         buildSite();
