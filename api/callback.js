@@ -10,8 +10,6 @@ export default async function handler(req, res) {
     }),
   });
   const data = await response.json();
-
-  // THE MAGIC FIX: Convert GitHub's 'access_token' into the 'token' Decap needs
   const decapPayload = { token: data.access_token, provider: "github" };
 
   res.send(`
