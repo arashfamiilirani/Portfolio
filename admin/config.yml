@@ -9,7 +9,7 @@ media_folder: "assets/img"
 public_folder: "/assets/img"
 
 editor:
-  preview: false   # We'll use our own custom preview
+  preview: false
 
 collections:
   - name: "pages"
@@ -19,8 +19,16 @@ collections:
         label: "Main Page"
         file: "content/settings.json"
         fields:
-          # ----- SITE NAME -----
           - { label: "Site Name (Logo)", name: "site_name", widget: "string", hint: "Appears in header" }
+
+          # ----- HERO IMAGE (Homepage Background) -----
+          - label: "Hero Image (Homepage Background)"
+            name: "hero"
+            widget: "object"
+            collapsed: false
+            fields:
+              - { label: "Image", name: "image", widget: "image", hint: "Upload a large landscape image" }
+              - { label: "Credit (optional)", name: "credit", widget: "string", required: false }
 
           # ----- THEME SETTINGS -----
           - label: "Theme Settings"
@@ -47,32 +55,29 @@ collections:
                 }
               - { label: "Heading Size (e.g., 4.5rem)", name: "heading_size", widget: "string", default: "4.5rem" }
 
-          # ----- SOCIAL MEDIA LINKS -----
+          # ----- SOCIAL LINKS -----
           - label: "Social Links (header icons)"
             name: "social_links"
             widget: "object"
             collapsed: false
             fields:
-              - { label: "Instagram URL", name: "instagram", widget: "string", required: false, hint: "e.g., https://instagram.com/..." }
+              - { label: "Instagram URL", name: "instagram", widget: "string", required: false }
               - { label: "YouTube URL", name: "youtube", widget: "string", required: false }
               - { label: "SoundCloud URL", name: "soundcloud", widget: "string", required: false }
               - { label: "Spotify URL", name: "spotify", widget: "string", required: false }
-              - { label: "Email (optional)", name: "email", widget: "string", required: false }
+              - { label: "Email", name: "email", widget: "string", required: false }
 
-          # ----- PAGE SECTIONS (DRAG & DROP) -----
-          - label: "Page Sections (reorder by dragging)"
+          # ----- PAGE SECTIONS (tabs) -----
+          - label: "Page Sections (tabs)"
             name: "sections"
             widget: "list"
             summary: '{{fields.title}} ({{fields.type}})'
             types:
-              # Bio / CV section
               - label: "Bio / CV"
                 name: "bio"
                 fields:
-                  - { label: "Section Title (shown in menu)", name: "title", widget: "string", default: "Bio / CV", required: true }
-                  - { label: "Content", name: "body", widget: "markdown", default_view: "visual", buttons: ["heading-one", "heading-two", "bold", "italic", "quote", "link", "bulleted-list"] }
-
-              # Video Reel section (grid of videos)
+                  - { label: "Section Title", name: "title", widget: "string", default: "Bio / CV", required: true }
+                  - { label: "Content", name: "body", widget: "markdown", default_view: "visual" }
               - label: "Video Reel"
                 name: "video_reel"
                 fields:
@@ -81,10 +86,8 @@ collections:
                     name: "videos"
                     widget: "list"
                     fields:
-                      - { label: "Video URL (YouTube/Vimeo embed link)", name: "url", widget: "string" }
+                      - { label: "Video URL (YouTube/Vimeo embed)", name: "url", widget: "string" }
                       - { label: "Caption", name: "caption", widget: "string", required: false }
-
-              # Music section (grid of audio embeds)
               - label: "Music"
                 name: "music"
                 fields:
@@ -94,9 +97,7 @@ collections:
                     widget: "list"
                     fields:
                       - { label: "Embed URL (SoundCloud/Spotify)", name: "url", widget: "string" }
-                      - { label: "Track Details", name: "caption", widget: "string", required: false }
-
-              # Sound Design section (another audio grid, but you can rename)
+                      - { label: "Details", name: "caption", widget: "string", required: false }
               - label: "Sound Design"
                 name: "sound_design"
                 fields:
@@ -107,12 +108,8 @@ collections:
                     fields:
                       - { label: "Embed URL", name: "url", widget: "string" }
                       - { label: "Details", name: "caption", widget: "string", required: false }
-
-              # Contact section
               - label: "Contact"
                 name: "contact"
                 fields:
                   - { label: "Section Title", name: "title", widget: "string", default: "Contact", required: true }
-                  - { label: "Contact Text (optional)", name: "text", widget: "markdown", required: false, hint: "e.g., For inquiries, email me at ..." }
-
-              # Custom: you can add more types later, e.g., "image_gallery", "testimonial", etc.
+                  - { label: "Contact Text", name: "text", widget: "markdown", required: false }
