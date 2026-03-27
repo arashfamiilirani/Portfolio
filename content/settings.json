@@ -17,5 +17,11 @@
     "soundcloud": "https://soundcloud.com/afamiil-irani"
   },
   "site_name": "Arash Famiilirani",
-  "home_label": "Arash Famiilirani"
+  "home_label": "Arash Famiilirani",
+  "sections": [
+    {
+      "type": "contact",
+      "title": "Contact"
+    }
+  ]
 }
