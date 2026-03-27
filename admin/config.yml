@@ -1,3 +1,16 @@
+backend:
+  name: github
+  repo: arashfamiilirani/portfolio
+  branch: main
+  base_url: https://www.arashfamiilirani.com
+  auth_endpoint: /api/auth
+
+media_folder: "assets/img"
+public_folder: "/assets/img"
+
+editor:
+  preview: false   # We'll use our own custom preview in admin/preview.js
+
 collections:
   - name: "pages"
     label: "Site Builder (Drag & Drop)"
@@ -6,9 +19,10 @@ collections:
         label: "Main Page"
         file: "content/settings.json"
         fields:
+          # ----- SITE NAME -----
           - { label: "Site Name (Logo)", name: "site_name", widget: "string", hint: "Appears in header" }
-          
-          # ----- NEW THEME SETTINGS SECTION -----
+
+          # ----- THEME SETTINGS (NEW) -----
           - label: "Theme Settings"
             name: "theme"
             widget: "object"
@@ -17,11 +31,23 @@ collections:
               - { label: "Background Color", name: "bg", widget: "color", default: "#ffffff" }
               - { label: "Text Color", name: "text", widget: "color", default: "#111111" }
               - { label: "Accent Color (hover links)", name: "accent", widget: "color", default: "#000000" }
-              - { label: "Heading Font", name: "heading_font", widget: "select", options: ["Cormorant Garamond, serif", "Georgia, serif", "Playfair Display, serif"], default: "Cormorant Garamond, serif" }
-              - { label: "Body Font", name: "body_font", widget: "select", options: ["Inter, sans-serif", "Helvetica, sans-serif", "Open Sans, sans-serif"], default: "Inter, sans-serif" }
+              - { 
+                  label: "Heading Font", 
+                  name: "heading_font", 
+                  widget: "select", 
+                  options: ["Cormorant Garamond, serif", "Georgia, serif", "Playfair Display, serif"], 
+                  default: "Cormorant Garamond, serif" 
+                }
+              - { 
+                  label: "Body Font", 
+                  name: "body_font", 
+                  widget: "select", 
+                  options: ["Inter, sans-serif", "Helvetica, sans-serif", "Open Sans, sans-serif"], 
+                  default: "Inter, sans-serif" 
+                }
               - { label: "Heading Size (e.g., 4.5rem)", name: "heading_size", widget: "string", default: "4.5rem" }
-          # ----- END THEME -----
 
+          # ----- PAGE SECTIONS (DRAG & DROP BLOCKS) -----
           - label: "Page Sections"
             name: "modules"
             widget: "list"
@@ -31,12 +57,20 @@ collections:
                 name: "text_block"
                 fields:
                   - { label: "Navigation Title (shown in menu)", name: "title", widget: "string", required: true, hint: "This will appear in the header menu" }
-                  - { label: "Content", name: "body", widget: "markdown", default_view: "visual", buttons: ["heading-one", "heading-two", "bold", "italic", "quote", "link", "bulleted-list"] }
+                  - { 
+                      label: "Content", 
+                      name: "body", 
+                      widget: "markdown", 
+                      default_view: "visual", 
+                      buttons: ["heading-one", "heading-two", "bold", "italic", "quote", "link", "bulleted-list"] 
+                    }
+              
               - label: "Video"
                 name: "video_block"
                 fields:
                   - { label: "Navigation Title", name: "caption", widget: "string", required: true, hint: "Menu label" }
-                  - { label: "Video URL", name: "url", widget: "string" }
+                  - { label: "Video URL (YouTube/Vimeo embed link)", name: "url", widget: "string" }
+
               - label: "Audio Grid"
                 name: "audio_block"
                 fields:
