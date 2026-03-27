@@ -48,10 +48,10 @@
     {
       "type": "music",
       "title": "Music",
-      "layout": "list",
+      "layout": "grid",
       "tracks": [
         {
-          "url": "https://on.soundcloud.com/Mdn9jU42PJduer0SgD"
+          "url": "https://soundcloud.com/Mdn9jU42PJduer0SgD"
         }
       ],
       "style": {
