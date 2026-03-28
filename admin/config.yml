@@ -21,7 +21,7 @@ collections:
         fields:
           - { label: "Site Name (Logo & Home Tab)", name: "site_name", widget: "string", default: "ARASH FAMIILIRANI" }
 
-          # Hero (image/GIF or video)
+          # Hero
           - label: "Hero Background"
             name: "hero"
             widget: "object"
@@ -35,15 +35,6 @@ collections:
               - { label: "Object Fit", name: "fit", widget: "select", options: ["cover", "contain", "fill", "scale-down"], default: "cover" }
               - { label: "Alignment", name: "alignment", widget: "select", options: ["center", "left", "right"], default: "center" }
 
-          # Page overlay (tint/shade)
-          - label: "Page Overlay (optional)"
-            name: "page_overlay"
-            widget: "object"
-            collapsed: false
-            fields:
-              - { label: "Color", name: "color", widget: "color", required: false, hint: "Semi‑transparent color (e.g., rgba(0,0,0,0.3) or #000000 with opacity later)" }
-              - { label: "Opacity (0‑1)", name: "opacity", widget: "number", min: 0, max: 1, step: 0.05, default: 0, hint: "0 = transparent, 1 = solid" }
-
           # Theme
           - label: "Theme"
             name: "theme"
@@ -52,7 +43,6 @@ collections:
               - { label: "Background Color", name: "bg", widget: "color", default: "#ffffff" }
               - { label: "Text Color", name: "text", widget: "color", default: "#111111" }
               - { label: "Accent Color", name: "accent", widget: "color", default: "#000000" }
-              - { label: "Header Opacity (0‑1)", name: "header_opacity", widget: "number", min: 0, max: 1, step: 0.05, default: 0.92, hint: "0 = fully transparent, 1 = fully opaque" }
               - { label: "Heading Font", name: "heading_font", widget: "select", options: ["Cormorant Garamond, serif", "Georgia, serif", "Playfair Display, serif", "Inter, sans-serif"], default: "Cormorant Garamond, serif" }
               - { label: "Body Font", name: "body_font", widget: "select", options: ["Inter, sans-serif", "Helvetica, sans-serif", "Open Sans, sans-serif"], default: "Inter, sans-serif" }
               - { label: "Heading Size (e.g., 4.5rem)", name: "heading_size", widget: "string", default: "4.5rem" }
@@ -69,7 +59,7 @@ collections:
               - { label: "Spotify URL", name: "spotify", widget: "string", required: false }
               - { label: "Email", name: "email", widget: "string", required: false }
 
-          # Sections (tabs)
+          # Sections
           - label: "Tabs (your custom sections)"
             name: "sections"
             widget: "list"
@@ -85,26 +75,26 @@ collections:
                 name: "video_grid"
                 fields:
                   - { label: "Tab Title", name: "title", widget: "string" }
-                  - { label: "Layout", name: "layout", widget: "select", options: ["grid", "list"], default: "grid", hint: "Grid = columns, List = full width stacked" }
+                  - { label: "Layout", name: "layout", widget: "select", options: ["grid", "list"], default: "grid" }
                   - { label: "Video Width (e.g., 100%, 800px)", name: "width", widget: "string", default: "100%", hint: "Only applies to Grid layout" }
                   - label: "Videos"
                     name: "videos"
                     widget: "list"
                     fields:
-                      - { label: "Embed URL (YouTube/Vimeo)", name: "url", widget: "string", hint: "Paste the embed URL (e.g., https://www.youtube.com/embed/...)" }
+                      - { label: "Embed URL (YouTube/Vimeo)", name: "url", widget: "string" }
                       - { label: "Caption", name: "caption", widget: "string", required: false }
 
               - label: "Audio Grid"
                 name: "audio_grid"
                 fields:
                   - { label: "Tab Title", name: "title", widget: "string" }
-                  - { label: "Layout", name: "layout", widget: "select", options: ["grid", "list"], default: "grid", hint: "Grid = columns, List = full width stacked" }
+                  - { label: "Layout", name: "layout", widget: "select", options: ["grid", "list"], default: "grid" }
                   - { label: "Audio Width (e.g., 100%, 600px)", name: "width", widget: "string", default: "100%", hint: "Only applies to Grid layout" }
                   - label: "Tracks"
                     name: "tracks"
                     widget: "list"
                     fields:
-                      - { label: "Embed URL (SoundCloud/Spotify)", name: "url", widget: "string", hint: "Use the embed URL from SoundCloud (e.g., https://w.soundcloud.com/player/?url=...)" }
+                      - { label: "Embed URL (SoundCloud/Spotify)", name: "url", widget: "string" }
                       - { label: "Details", name: "caption", widget: "string", required: false }
 
               - label: "Contact Form"
