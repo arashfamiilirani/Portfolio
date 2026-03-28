@@ -15,7 +15,11 @@
             --body-font: 'Inter', sans-serif;
             --heading-size: 4.5rem;
             --body-font-size: 1.2rem;
-            --header-height: 60px;
+        }
+        /* Global scroll offset to prevent content from hiding under fixed header */
+        html {
+            scroll-padding-top: 80px; /* will be updated by JS to match header height */
+            scroll-behavior: smooth;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -124,7 +128,6 @@
         .section {
             display: none;
             animation: fadeIn 0.3s ease;
-            scroll-margin-top: calc(var(--header-height) + 20px);
         }
         .section.active {
             display: block;
@@ -454,14 +457,14 @@
                 const heroElem = document.getElementById('hero-section');
                 const sectionsElements = document.querySelectorAll('.section');
 
-                // Set header height for scroll-margin-top
-                function setHeaderHeight() {
+                // Update scroll-padding-top based on header height
+                function updateScrollPadding() {
                     const header = document.querySelector('.site-header');
                     const height = header.offsetHeight;
-                    document.documentElement.style.setProperty('--header-height', height + 'px');
+                    document.documentElement.style.scrollPaddingTop = height + 'px';
                 }
-                setHeaderHeight();
-                window.addEventListener('resize', setHeaderHeight);
+                updateScrollPadding();
+                window.addEventListener('resize', updateScrollPadding);
 
                 logo.addEventListener('click', () => {
                     heroElem.style.display = 'block';
