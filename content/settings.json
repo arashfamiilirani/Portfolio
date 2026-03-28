@@ -63,6 +63,6 @@
   ],
   "page_overlay": {
     "color": "#edf4f4",
-    "opacity": 1
+    "opacity": 0
   }
 }
