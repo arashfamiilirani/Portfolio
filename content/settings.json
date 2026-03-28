@@ -45,7 +45,7 @@
       "videos": [
         {
           "url": "https://www.youtube.com/embed/zOXvSNcMYCc",
-          "caption": "Sound Design Reel"
+          "caption": ""
         }
       ]
     },
@@ -57,7 +57,7 @@
     {
       "type": "contact",
       "title": "Contact",
-      "text": "Feel free to reach out via the form below."
+      "text": ""
     }
   ]
 }
