@@ -6,7 +6,7 @@
     "credit": "",
     "width": "100%",
     "height": "100vh",
-    "fit": "cover",
+    "fit": "scale-down",
     "alignment": "center"
   },
   "theme": {
@@ -16,7 +16,7 @@
     "heading_font": "Cormorant Garamond, serif",
     "body_font": "Inter, sans-serif",
     "heading_size": "3.5rem",
-    "body_font_size": "1.2rem"
+    "body_font_size": "1rem"
   },
   "social_links": {
     "instagram": "https://www.instagram.com/a.feefifofum/",
@@ -52,7 +52,7 @@
     {
       "type": "text",
       "title": "Bio / CV",
-      "body": "**Biography**\n\nArash Famiilirani is a Montreal-based electroacoustic composer and sound artist whose work explores the boundaries between perception, time, and minimal sonic materials. A graduate of Concordia University’s Bachelor of Fine Arts program in Electroacoustic Studies, Famiilirani’s practice draws from both experimental composition and attentive listening, transforming subtle gestures and everyday sounds into immersive auditory experiences. His recent works investigate psychoacoustic phenomena and the tension between structure and stillness, inviting audiences to engage with sound as a living, perceptual field.\n\n**Education**\n\nBachelor of Fine Arts 2016–2021  \nElectroacoustic Studies  \nConcordia University, Montreal, Quebec\n\n**Performances**\n\n- Sound Engineer, Concordia Chamber Jazz Ensemble, Oscar Peterson Concert Hall, Montreal, 2022\n- Sound Engineer, Concordia Choir and Chamber Choir, Oscar Peterson Concert Hall, Montreal, 2021\n- Composer, 60x60 Concordia, Montreal, 2020\n- Composer, 60x60 Concordia, Montreal, 2019\n- Live Sound Designer/Performer, CLOrk goes Free Jazz, with Michael Pinsonneault and Eden Bahar, Concordia University, Montreal, 2019\n- Composer, 60x60 Concordia, Montreal, 2018\n- Producing Station IDs for radio CJLO 1690, Montreal, 2018\n- Live Sound Designer/Performer, Concordia Laptop Orchestra with Andrea Young, Concordia University, Montreal, 2018\n- Live Sound Designer/Performer, Set Phasers To Stun: CLOrk, Amanda Christie, & Damaris Baker, Eastern Bloc, Montreal, 2017\n- Composer and Sound Artist, Darchin Duo, Tehran, Iran, 2007–2015\n- Performer, Jazz Quintet, Da House, Tehran, Iran, 2014\n- Performer, Jazz Trio, Shamlou, Tehran, Iran, 2014\n- Performer, Jazz Quartet Orf, Tehran, Iran, 2012\n- Performer, Tehran Conservatoire Choir, Tehran University, Tehran, Iran, 2011"
+      "body": "\n\n\n\n\n\n\n\n\n\n\n\n**Biography**\n\nArash Famiilirani is a Montreal-based electroacoustic composer and sound artist whose work explores the boundaries between perception, time, and minimal sonic materials. A graduate of Concordia University’s Bachelor of Fine Arts program in Electroacoustic Studies, Famiilirani’s practice draws from both experimental composition and attentive listening, transforming subtle gestures and everyday sounds into immersive auditory experiences. His recent works investigate psychoacoustic phenomena and the tension between structure and stillness, inviting audiences to engage with sound as a living, perceptual field.\n\n**Education**\n\nBachelor of Fine Arts 2016–2021\\\nElectroacoustic Studies\\\nConcordia University, Montreal, Quebec\n\n**Performances**\n\n* Sound Engineer, Concordia Chamber Jazz Ensemble, Oscar Peterson Concert Hall, Montreal, 2022\n* Sound Engineer, Concordia Choir and Chamber Choir, Oscar Peterson Concert Hall, Montreal, 2021\n* Composer, 60x60 Concordia, Montreal, 2020\n* Composer, 60x60 Concordia, Montreal, 2019\n* Live Sound Designer/Performer, CLOrk goes Free Jazz, with Michael Pinsonneault and Eden Bahar, Concordia University, Montreal, 2019\n* Composer, 60x60 Concordia, Montreal, 2018\n* Producing Station IDs for radio CJLO 1690, Montreal, 2018\n* Live Sound Designer/Performer, Concordia Laptop Orchestra with Andrea Young, Concordia University, Montreal, 2018\n* Live Sound Designer/Performer, Set Phasers To Stun: CLOrk, Amanda Christie, & Damaris Baker, Eastern Bloc, Montreal, 2017\n* Composer and Sound Artist, Darchin Duo, Tehran, Iran, 2007–2015\n* Performer, Jazz Quintet, Da House, Tehran, Iran, 2014\n* Performer, Jazz Trio, Shamlou, Tehran, Iran, 2014\n* Performer, Jazz Quartet Orf, Tehran, Iran, 2012\n* Performer, Tehran Conservatoire Choir, Tehran University, Tehran, Iran, 2011"
     },
     {
       "type": "contact",
