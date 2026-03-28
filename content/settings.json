@@ -10,7 +10,7 @@
     "alignment": "center"
   },
   "theme": {
-    "bg": "#fefefe",
+    "bg": "#f8f7f1",
     "text": "#111111",
     "accent": "#8a8787",
     "heading_font": "Cormorant Garamond, serif",
@@ -63,6 +63,6 @@
   ],
   "page_overlay": {
     "color": "#edf4f4",
-    "opacity": 0
+    "opacity": 1
   }
 }
