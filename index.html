@@ -15,11 +15,7 @@
             --body-font: 'Inter', sans-serif;
             --heading-size: 4.5rem;
             --body-font-size: 1.2rem;
-        }
-        /* Global scroll offset to prevent content from hiding under fixed header */
-        html {
-            scroll-padding-top: 80px; /* will be updated by JS to match header height */
-            scroll-behavior: smooth;
+            --header-height: 60px;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -31,14 +27,13 @@
             -webkit-font-smoothing: antialiased;
             font-size: var(--body-font-size);
         }
+        /* Header: solid background, no border, no blur */
         .site-header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            background: rgba(255,255,255,0.92);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(0,0,0,0.08);
+            background: var(--bg);
             padding: 0.6rem 2rem;
             display: flex;
             justify-content: space-between;
@@ -114,11 +109,14 @@
             border-radius: 4px;
             z-index: 2;
         }
+        /* Main container with scroll padding to prevent header overlap */
+        .main-container {
+            scroll-padding-top: calc(var(--header-height) + 20px);
+        }
         .scroll-content {
             position: relative;
             background: var(--bg);
             z-index: 10;
-            border-top: 1px solid rgba(0,0,0,0.05);
         }
         .main-content {
             max-width: 1000px;
@@ -128,6 +126,7 @@
         .section {
             display: none;
             animation: fadeIn 0.3s ease;
+            scroll-margin-top: calc(var(--header-height) + 20px);
         }
         .section.active {
             display: block;
@@ -253,9 +252,11 @@
         <div class="social-icons" id="social-icons"></div>
     </header>
     <div class="hero" id="hero-section"></div>
-    <div class="scroll-content">
-        <main class="main-content" id="main-content"></main>
-        <footer class="site-footer" id="footer"></footer>
+    <div class="main-container">
+        <div class="scroll-content">
+            <main class="main-content" id="main-content"></main>
+            <footer class="site-footer" id="footer"></footer>
+        </div>
     </div>
 
     <script>
@@ -457,14 +458,14 @@
                 const heroElem = document.getElementById('hero-section');
                 const sectionsElements = document.querySelectorAll('.section');
 
-                // Update scroll-padding-top based on header height
-                function updateScrollPadding() {
+                // Set header height for scroll-margin-top and scroll-padding-top
+                function setHeaderHeight() {
                     const header = document.querySelector('.site-header');
                     const height = header.offsetHeight;
-                    document.documentElement.style.scrollPaddingTop = height + 'px';
+                    document.documentElement.style.setProperty('--header-height', height + 'px');
                 }
-                updateScrollPadding();
-                window.addEventListener('resize', updateScrollPadding);
+                setHeaderHeight();
+                window.addEventListener('resize', setHeaderHeight);
 
                 logo.addEventListener('click', () => {
                     heroElem.style.display = 'block';
