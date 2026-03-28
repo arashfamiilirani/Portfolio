@@ -21,19 +21,19 @@ collections:
         fields:
           - { label: "Site Name (Logo & Home Tab)", name: "site_name", widget: "string", default: "ARASH FAMIILIRANI" }
 
-          # Hero Image – full customization
-          - label: "Hero Image"
+          # Hero Image (supports GIF)
+          - label: "Hero Image (GIF or image)"
             name: "hero"
             widget: "object"
             fields:
-              - { label: "Image", name: "image", widget: "image" }
+              - { label: "Image or GIF", name: "image", widget: "image", hint: "Upload an image or animated GIF" }
               - { label: "Credit (optional)", name: "credit", widget: "string", required: false }
               - { label: "Width (px or %)", name: "width", widget: "string", default: "100%", hint: "e.g., 100%, 800px" }
               - { label: "Height (px or vh)", name: "height", widget: "string", default: "100vh", hint: "e.g., 100vh, 600px" }
               - { label: "Object Fit", name: "fit", widget: "select", options: ["cover", "contain", "fill", "scale-down"], default: "cover" }
               - { label: "Alignment", name: "alignment", widget: "select", options: ["center", "left", "right"], default: "center" }
 
-          # Theme (simplified)
+          # Theme (global fonts & sizes)
           - label: "Theme"
             name: "theme"
             widget: "object"
@@ -44,8 +44,9 @@ collections:
               - { label: "Heading Font", name: "heading_font", widget: "select", options: ["Cormorant Garamond, serif", "Georgia, serif", "Playfair Display, serif", "Inter, sans-serif"], default: "Cormorant Garamond, serif" }
               - { label: "Body Font", name: "body_font", widget: "select", options: ["Inter, sans-serif", "Helvetica, sans-serif", "Open Sans, sans-serif"], default: "Inter, sans-serif" }
               - { label: "Heading Size (e.g., 4.5rem)", name: "heading_size", widget: "string", default: "4.5rem" }
+              - { label: "Body Text Size (e.g., 1.2rem)", name: "body_font_size", widget: "string", default: "1.2rem" }
 
-          # Social links (header icons)
+          # Social links
           - label: "Social Links"
             name: "social_links"
             widget: "object"
@@ -56,7 +57,7 @@ collections:
               - { label: "Spotify URL", name: "spotify", widget: "string", required: false }
               - { label: "Email", name: "email", widget: "string", required: false }
 
-          # Sections – YOU create any tabs you want
+          # Sections – you create any tabs you want
           - label: "Tabs (your custom sections)"
             name: "sections"
             widget: "list"
@@ -72,22 +73,24 @@ collections:
                 name: "video_grid"
                 fields:
                   - { label: "Tab Title", name: "title", widget: "string" }
+                  - { label: "Video Width (e.g., 100%, 800px)", name: "width", widget: "string", default: "100%", hint: "Leave as 100% for full width" }
                   - label: "Videos"
                     name: "videos"
                     widget: "list"
                     fields:
-                      - { label: "Embed URL (YouTube/Vimeo)", name: "url", widget: "string" }
+                      - { label: "Embed URL (YouTube/Vimeo)", name: "url", widget: "string", hint: "Paste the embed URL (e.g., https://www.youtube.com/embed/...)" }
                       - { label: "Caption", name: "caption", widget: "string", required: false }
 
               - label: "Audio Grid"
                 name: "audio_grid"
                 fields:
                   - { label: "Tab Title", name: "title", widget: "string" }
+                  - { label: "Audio Width (e.g., 100%, 600px)", name: "width", widget: "string", default: "100%", hint: "Leave as 100% for full width" }
                   - label: "Tracks"
                     name: "tracks"
                     widget: "list"
                     fields:
-                      - { label: "Embed URL (SoundCloud/Spotify)", name: "url", widget: "string" }
+                      - { label: "Embed URL (SoundCloud/Spotify)", name: "url", widget: "string", hint: "Use the embed URL from SoundCloud (e.g., https://w.soundcloud.com/player/?url=...)" }
                       - { label: "Details", name: "caption", widget: "string", required: false }
 
               - label: "Contact Form"
