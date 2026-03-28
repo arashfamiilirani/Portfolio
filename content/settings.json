@@ -45,6 +45,17 @@
       "type": "contact",
       "title": "Contact",
       "body": "bio"
+    },
+    {
+      "type": "video_grid",
+      "layout": "grid",
+      "width": "100%",
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=zOXvSNcMYCc"
+        }
+      ],
+      "title": "Sound Design Reels"
     }
   ]
 }
