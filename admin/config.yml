@@ -21,21 +21,21 @@ collections:
         fields:
           - { label: "Site Name (Logo & Home Tab)", name: "site_name", widget: "string", default: "ARASH FAMIILIRANI" }
 
-          # Hero (supports image/GIF or video)
+          # Hero (image/GIF or video)
           - label: "Hero Background"
             name: "hero"
             widget: "object"
             fields:
               - { label: "Type", name: "type", widget: "select", options: ["image", "video"], default: "image" }
               - { label: "Image or GIF", name: "image", widget: "image", required: false, hint: "If type is image" }
-              - { label: "Video URL (MP4/WebM)", name: "video", widget: "string", required: false, hint: "If type is video, paste direct URL (e.g., /assets/video/loop.mp4)" }
+              - { label: "Video URL (MP4/WebM)", name: "video", widget: "string", required: false, hint: "If type is video, paste direct URL" }
               - { label: "Credit (optional)", name: "credit", widget: "string", required: false }
               - { label: "Width (px or %)", name: "width", widget: "string", default: "100%", hint: "e.g., 100%, 800px" }
               - { label: "Height (px or vh)", name: "height", widget: "string", default: "100vh", hint: "e.g., 100vh, 600px" }
               - { label: "Object Fit", name: "fit", widget: "select", options: ["cover", "contain", "fill", "scale-down"], default: "cover" }
               - { label: "Alignment", name: "alignment", widget: "select", options: ["center", "left", "right"], default: "center" }
 
-          # Theme (global fonts & sizes)
+          # Theme
           - label: "Theme"
             name: "theme"
             widget: "object"
@@ -59,7 +59,7 @@ collections:
               - { label: "Spotify URL", name: "spotify", widget: "string", required: false }
               - { label: "Email", name: "email", widget: "string", required: false }
 
-          # Sections – you create any tabs you want
+          # Sections (tabs)
           - label: "Tabs (your custom sections)"
             name: "sections"
             widget: "list"
@@ -75,7 +75,8 @@ collections:
                 name: "video_grid"
                 fields:
                   - { label: "Tab Title", name: "title", widget: "string" }
-                  - { label: "Video Width (e.g., 100%, 800px)", name: "width", widget: "string", default: "100%", hint: "Leave as 100% for full width" }
+                  - { label: "Layout", name: "layout", widget: "select", options: ["grid", "list"], default: "grid", hint: "Grid = columns, List = full width stacked" }
+                  - { label: "Video Width (e.g., 100%, 800px)", name: "width", widget: "string", default: "100%", hint: "Only applies to Grid layout" }
                   - label: "Videos"
                     name: "videos"
                     widget: "list"
@@ -87,7 +88,8 @@ collections:
                 name: "audio_grid"
                 fields:
                   - { label: "Tab Title", name: "title", widget: "string" }
-                  - { label: "Audio Width (e.g., 100%, 600px)", name: "width", widget: "string", default: "100%", hint: "Leave as 100% for full width" }
+                  - { label: "Layout", name: "layout", widget: "select", options: ["grid", "list"], default: "grid", hint: "Grid = columns, List = full width stacked" }
+                  - { label: "Audio Width (e.g., 100%, 600px)", name: "width", widget: "string", default: "100%", hint: "Only applies to Grid layout" }
                   - label: "Tracks"
                     name: "tracks"
                     widget: "list"
