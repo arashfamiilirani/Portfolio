@@ -5,7 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes" />
   <title>Admin Portal</title>
   <style>
-    /* iOS improvements */
+    /* Make the markdown editor font larger for easier editing */
+    .decap-cms-widget-markdown textarea {
+      font-size: 16px !important;
+      line-height: 1.5 !important;
+    }
+    /* Improve tap targets */
     @media (max-width: 768px) {
       .decap-cms-widget-list__item,
       .decap-cms-widget-object__field,
@@ -24,22 +29,20 @@
 <body>
   <script src="https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js"></script>
   <script>
-    // Wait for Decap CMS to be ready
     CMS.registerDashboardCard({
       name: 'site-info',
       label: 'Site Overview',
       component: () => {
         return `
           <div style="padding: 20px; background: #f9f9f9; border-radius: 8px; margin-bottom: 20px;">
-            <h2>Welcome to the Admin Panel</h2>
-            <p>Use the left menu to edit your site.</p>
+            <h2>Welcome to the Site Builder</h2>
+            <p>Use the left menu to edit your site. Create custom tabs, upload a hero GIF or video, and manage your content.</p>
             <hr>
             <h3>Quick Links</h3>
             <ul>
               <li><a href="/" target="_blank">View Live Site</a></li>
               <li><a href="#/collections/pages/entries/home">Edit Main Page</a></li>
             </ul>
-            <p style="font-size: 0.8rem; margin-top: 20px;">Need help? Check the <a href="https://decapcms.org/docs/" target="_blank">Decap CMS docs</a>.</p>
           </div>
         `;
       }
