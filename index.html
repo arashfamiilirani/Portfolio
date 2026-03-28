@@ -26,7 +26,6 @@
             -webkit-font-smoothing: antialiased;
             font-size: var(--body-font-size);
         }
-        /* Header – narrower */
         .site-header {
             position: fixed;
             top: 0;
@@ -83,7 +82,6 @@
             text-decoration: none;
             padding: 0.4rem;
         }
-        /* Hero */
         .hero {
             position: relative;
             width: 100%;
@@ -111,7 +109,6 @@
             border-radius: 4px;
             z-index: 2;
         }
-        /* Content area */
         .scroll-content {
             position: relative;
             background: var(--bg);
@@ -138,7 +135,6 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        /* Text section */
         .text h1 {
             font-size: var(--heading-size);
             line-height: 1.1;
@@ -150,10 +146,16 @@
             margin-bottom: 1.5rem;
             max-width: 85%;
         }
-        /* Video grid */
-        .video_grid .video-grid {
+        /* Video grid & list */
+        .video-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+        .video-list {
+            display: flex;
+            flex-direction: column;
             gap: 2rem;
             margin-top: 1.5rem;
         }
@@ -163,10 +165,16 @@
             border: none;
             background: #f0f0f0;
         }
-        /* Audio grid */
-        .audio_grid .audio-grid {
+        /* Audio grid & list */
+        .audio-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+        .audio-list {
+            display: flex;
+            flex-direction: column;
             gap: 2rem;
             margin-top: 1.5rem;
         }
@@ -183,7 +191,6 @@
             opacity: 0.7;
             margin-top: 0.5rem;
         }
-        /* Contact form */
         .contact-form {
             margin-top: 1rem;
         }
@@ -289,10 +296,10 @@
                     if (data.theme.body_font_size) root.setProperty('--body-font-size', data.theme.body_font_size);
                 }
 
-                // Site name (used for both logo and home tab)
+                // Site name
                 const siteName = data.site_name || 'ARASH FAMIILIRANI';
                 document.getElementById('logo-text').textContent = siteName;
-                const homeLabel = siteName; // Home tab uses site name
+                const homeLabel = siteName;
 
                 // Social icons
                 const social = data.social_links || {};
@@ -305,7 +312,7 @@
                 if (social.email) socialLinks.push(`<a href="mailto:${social.email}"><i class="fas fa-envelope"></i></a>`);
                 socialContainer.innerHTML = socialLinks.join('');
 
-                // Dynamic copyright
+                // Copyright
                 const currentYear = new Date().getFullYear();
                 document.getElementById('footer').innerHTML = `<p>© ${currentYear} Arash Famiilirani. All rights reserved.</p>`;
 
@@ -315,14 +322,12 @@
                 const heroType = hero.type || 'image';
 
                 if (heroType === 'video' && hero.video) {
-                    // Video background
                     heroContainer.innerHTML = `
                         <video autoplay loop muted playsinline>
                             <source src="${hero.video}" type="video/mp4">
                         </video>
                         ${hero.credit ? `<div class="credit">${hero.credit}</div>` : ''}
                     `;
-                    // Apply sizing styles
                     heroContainer.style.cssText = `
                         width: ${hero.width || '100%'};
                         height: ${hero.height || '100vh'};
@@ -330,7 +335,6 @@
                     heroContainer.style.setProperty('--hero-fit', hero.fit || 'cover');
                     heroContainer.style.setProperty('--hero-align', hero.alignment || 'center');
                 } else if (hero.image) {
-                    // Image / GIF background
                     heroContainer.innerHTML = `
                         <img src="${hero.image}" alt="Hero">
                         ${hero.credit ? `<div class="credit">${hero.credit}</div>` : ''}
@@ -345,7 +349,7 @@
                     heroContainer.innerHTML = '';
                 }
 
-                // Sections – custom tabs
+                // Sections
                 const sections = data.sections || [];
                 const mainContainer = document.getElementById('main-content');
                 mainContainer.innerHTML = '';
@@ -362,10 +366,12 @@
                     } 
                     else if (section.type === 'video_grid') {
                         const videos = section.videos || [];
+                        const layout = section.layout === 'list' ? 'video-list' : 'video-grid';
                         const videoWidth = section.width || '100%';
+                        const gridStyle = layout === 'video-grid' ? `grid-template-columns: repeat(auto-fill, minmax(${videoWidth === '100%' ? '300px' : videoWidth}, 1fr));` : '';
                         contentHtml = `
                             <h2>${section.title}</h2>
-                            <div class="video-grid" style="grid-template-columns: repeat(auto-fill, minmax(${videoWidth === '100%' ? '300px' : videoWidth}, 1fr));">
+                            <div class="${layout}" style="${gridStyle}">
                                 ${videos.map(v => `
                                     <div class="video-item">
                                         <iframe src="${convertYouTubeUrl(v.url)}" frameborder="0" allowfullscreen></iframe>
@@ -377,10 +383,12 @@
                     }
                     else if (section.type === 'audio_grid') {
                         const tracks = section.tracks || [];
+                        const layout = section.layout === 'list' ? 'audio-list' : 'audio-grid';
                         const audioWidth = section.width || '100%';
+                        const gridStyle = layout === 'audio-grid' ? `grid-template-columns: repeat(auto-fill, minmax(${audioWidth === '100%' ? '300px' : audioWidth}, 1fr));` : '';
                         contentHtml = `
                             <h2>${section.title}</h2>
-                            <div class="audio-grid" style="grid-template-columns: repeat(auto-fill, minmax(${audioWidth === '100%' ? '300px' : audioWidth}, 1fr));">
+                            <div class="${layout}" style="${gridStyle}">
                                 ${tracks.map(t => `
                                     <div class="audio-item">
                                         <iframe src="${t.url}" frameborder="0" scrolling="no"></iframe>
@@ -442,18 +450,16 @@
                     sectionsData.push({ id: sectionId, title: title });
                 });
 
-                // Navigation (Home + custom tabs)
+                // Navigation
                 const navContainer = document.getElementById('nav-links');
                 navContainer.innerHTML = `<a data-section="hero">${homeLabel}</a>` + 
                     sectionsData.map(item => `<a data-section="${item.id}">${item.title}</a>`).join('');
 
-                // Helper to get header height
                 const header = document.querySelector('.site-header');
                 const headerHeight = header.offsetHeight;
-
-                // Click handlers with offset
                 const heroElem = document.getElementById('hero-section');
                 const scrollContent = document.getElementById('scroll-content');
+
                 document.querySelectorAll('.nav-links a').forEach(link => {
                     link.addEventListener('click', (e) => {
                         const targetId = link.getAttribute('data-section');
@@ -478,7 +484,6 @@
                     });
                 });
 
-                // Initial state
                 heroElem.style.display = 'block';
                 document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
                 scrollContent.classList.remove('with-padding');
