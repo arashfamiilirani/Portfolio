@@ -5,12 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes" />
   <title>Admin Portal</title>
   <style>
-    /* Larger editor text for readability */
     .decap-cms-widget-markdown textarea {
       font-size: 16px !important;
       line-height: 1.5 !important;
     }
-    /* Bigger touch targets on mobile */
     @media (max-width: 768px) {
       .decap-cms-widget-list__item,
       .decap-cms-widget-object__field,
@@ -29,7 +27,6 @@
 <body>
   <script src="https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js"></script>
   <script>
-    // Optional dashboard card (responsive)
     CMS.registerDashboardCard({
       name: 'site-info',
       label: 'Site Overview',
