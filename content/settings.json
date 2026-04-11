@@ -52,7 +52,7 @@
     {
       "type": "audio_grid",
       "layout": "grid",
-      "width": "50%",
+      "width": "100%",
       "tracks": [
         {
           "url": "https://soundcloud.com/afamiil-irani/sets/radio-station-id?si=6a28d131d2bf46e391c523e12c310bac&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
