@@ -40,7 +40,7 @@
     {
       "type": "video_grid",
       "title": "Sound Design",
-      "layout": "list",
+      "layout": "grid",
       "width": "100%",
       "videos": [
         {
