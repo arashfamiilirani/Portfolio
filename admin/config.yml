@@ -21,17 +21,17 @@ collections:
         fields:
           - { label: "Site Name (Logo & Home)", name: "site_name", widget: "string", default: "ARASH FAMIILIRANI" }
 
-          # Hero Background (image or video)
+          # Hero Background
           - label: "Hero Background"
             name: "hero"
             widget: "object"
             fields:
               - { label: "Type", name: "type", widget: "select", options: ["image", "video"], default: "image" }
-              - { label: "Image or GIF", name: "image", widget: "image", required: false, hint: "If type is image" }
-              - { label: "Video URL (MP4/WebM)", name: "video", widget: "string", required: false, hint: "If type is video" }
-              - { label: "Credit (optional)", name: "credit", widget: "string", required: false }
-              - { label: "Width (px or %)", name: "width", widget: "string", default: "100%" }
-              - { label: "Height (px or vh)", name: "height", widget: "string", default: "100vh" }
+              - { label: "Image or GIF", name: "image", widget: "image", required: false }
+              - { label: "Video URL (MP4/WebM)", name: "video", widget: "string", required: false }
+              - { label: "Credit", name: "credit", widget: "string", required: false }
+              - { label: "Width", name: "width", widget: "string", default: "100%" }
+              - { label: "Height", name: "height", widget: "string", default: "100vh" }
               - { label: "Object Fit", name: "fit", widget: "select", options: ["cover", "contain", "fill", "scale-down"], default: "cover" }
               - { label: "Alignment", name: "alignment", widget: "select", options: ["center", "left", "right"], default: "center" }
 
@@ -45,10 +45,10 @@ collections:
               - { label: "Accent Color", name: "accent", widget: "color", default: "#000000" }
               - { label: "Heading Font", name: "heading_font", widget: "select", options: ["Cormorant Garamond, serif", "Georgia, serif", "Playfair Display, serif", "Inter, sans-serif"], default: "Cormorant Garamond, serif" }
               - { label: "Body Font", name: "body_font", widget: "select", options: ["Inter, sans-serif", "Helvetica, sans-serif", "Open Sans, sans-serif"], default: "Inter, sans-serif" }
-              - { label: "Heading Size (e.g., 4.5rem)", name: "heading_size", widget: "string", default: "4.5rem" }
-              - { label: "Body Text Size (e.g., 1.2rem)", name: "body_font_size", widget: "string", default: "1.2rem" }
+              - { label: "Heading Size", name: "heading_size", widget: "string", default: "4.5rem" }
+              - { label: "Body Text Size", name: "body_font_size", widget: "string", default: "1.2rem" }
 
-          # Social links (header icons)
+          # Social links
           - label: "Social Links"
             name: "social_links"
             widget: "object"
@@ -59,7 +59,7 @@ collections:
               - { label: "Spotify URL", name: "spotify", widget: "string", required: false }
               - { label: "Email", name: "email", widget: "string", required: false }
 
-          # Sections (tabs) – create any number of tabs
+          # Sections (tabs)
           - label: "Tabs (your custom sections)"
             name: "sections"
             widget: "list"
@@ -76,7 +76,7 @@ collections:
                 fields:
                   - { label: "Tab Title", name: "title", widget: "string" }
                   - { label: "Layout", name: "layout", widget: "select", options: ["grid", "list"], default: "grid" }
-                  - { label: "Video Width (e.g., 100%, 800px)", name: "width", widget: "string", default: "100%" }
+                  - { label: "Video Width", name: "width", widget: "string", default: "100%" }
                   - label: "Videos"
                     name: "videos"
                     widget: "list"
@@ -89,7 +89,7 @@ collections:
                 fields:
                   - { label: "Tab Title", name: "title", widget: "string" }
                   - { label: "Layout", name: "layout", widget: "select", options: ["grid", "list"], default: "grid" }
-                  - { label: "Audio Width (e.g., 100%, 600px)", name: "width", widget: "string", default: "100%" }
+                  - { label: "Audio Width", name: "width", widget: "string", default: "100%" }
                   - label: "Tracks"
                     name: "tracks"
                     widget: "list"
@@ -101,4 +101,4 @@ collections:
                 name: "contact"
                 fields:
                   - { label: "Tab Title", name: "title", widget: "string", default: "Contact" }
-                  - { label: "Intro Text (optional)", name: "text", widget: "markdown", required: false }
+                  - { label: "Intro Text", name: "text", widget: "markdown", required: false }
